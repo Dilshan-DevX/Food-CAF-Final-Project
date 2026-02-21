@@ -68,7 +68,7 @@ public class SpalshActivity extends AppCompatActivity {
                         findViewById(R.id.progress_circular).setVisibility(View.VISIBLE);
 
                     }
-                },1000);
+                },500);
 
         new Handler(Looper.getMainLooper())
                 .postDelayed(new Runnable() {
