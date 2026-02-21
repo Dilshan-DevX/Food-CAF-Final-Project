@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Food CAF</string>
+    <string name="Splash_text_1">Food CAF</string>
+    <string name="splash_code_x_pvt_ltd">Code X (PVT).LTD</string>
 </resources>
