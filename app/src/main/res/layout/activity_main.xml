@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:background="@drawable/home_top_tool_bar_bg"
-            android:layout_marginTop="50dp">
+            android:layout_marginTop="25dp">
 
             <ImageView
                 android:id="@+id/nav_Logo"
@@ -52,23 +52,27 @@
 <!--            android:layout_height="0dp"-->
 <!--            android:layout_weight="1"-->
 <!--            android:background="@color/gary_color_search_primary">-->
-<!--            -->
+
+<!--         -->
+
 <!--        </androidx.fragment.app.FragmentContainerView>-->
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewCategories"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="8dp"
-            android:clipToPadding="false"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/item_category" />
+<!--        <androidx.recyclerview.widget.RecyclerView-->
+<!--            android:id="@+id/recyclerViewCategories"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="15dp"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:padding="8dp"-->
+<!--            android:clipToPadding="false"-->
+<!--            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
+<!--            tools:listitem="@layout/item_category"-->
+<!--            android:layout_weight="1"-->
+<!--            />-->
 
         <androidx.fragment.app.FragmentContainerView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="10"
+            android:layout_weight="1"
             />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
