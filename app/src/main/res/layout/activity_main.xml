@@ -13,10 +13,13 @@
         android:orientation="vertical">
 
         <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:background="@drawable/home_top_tool_bar_bg"
-            android:layout_marginTop="25dp">
+            android:layout_marginTop="25dp"
+
+            >
 
             <ImageView
                 android:id="@+id/nav_Logo"
@@ -26,6 +29,7 @@
                 tools:srcCompat="@tools:sample/avatars"/>
 
             <EditText
+                android:id="@+id/textInputSearch"
                 android:layout_width="250dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="30dp"
@@ -41,7 +45,8 @@
                 android:id="@+id/menu_Logo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:srcCompat="@tools:sample/avatars"/>
+                tools:srcCompat="@tools:sample/avatars"
+                />
 
 
         </com.google.android.material.appbar.MaterialToolbar>
@@ -70,12 +75,14 @@
 <!--            />-->
 
         <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fragmentContainer"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNavView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:menu="@menu/bottom_nav_menu"
@@ -86,6 +93,7 @@
     </LinearLayout>
 
     <com.google.android.material.navigation.NavigationView
+        android:id="@+id/sideNavView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:menu="@menu/side_nav_menu"

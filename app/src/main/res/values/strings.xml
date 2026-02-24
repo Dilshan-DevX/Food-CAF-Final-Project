@@ -15,4 +15,6 @@
     <string name="order_string_bottom_nav_menu">Order</string>
     <string name="profile_string_bottom_nav_menu">Profile</string>
     <string name="search_hint_text">Search</string>
+    <string name="navigation_drawer_open">Open</string>
+    <string name="navigation_drawer_close">Close</string>
 </resources>
