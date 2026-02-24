@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">Food CAF</string>
+    <string name="Splash_text_1">Food CAF</string>
+    <string name="splash_code_x_pvt_ltd">Code X (PVT).LTD</string>
+    <string name="Side_nav_String_settings">Settings</string>
+    <string name="Side_nav_String_login">Login</string>
+    <string name="Side_nav_String_logout">Logout</string>
+    <string name="Side_nav_String_chat">Chat</string>
+    <string name="Side_nav_String_shopping_cart"> Cart</string>
+    <string name="Side_nav_String_favorite">Favorite</string>
+    <string name="Side_nav_String_profile">Profile</string>
+    <string name="Side_nav_String_home">Home</string>
+    <string name="home_string_bottom_nav_menu">Home</string>
+    <string name="search_string_bottom_nav_menu">Search</string>
+    <string name="order_string_bottom_nav_menu">Order</string>
+    <string name="profile_string_bottom_nav_menu">Profile</string>
+    <string name="search_hint_text">Search</string>
 </resources>
