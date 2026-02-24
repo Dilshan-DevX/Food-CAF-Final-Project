@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:icon="@drawable/home_24px" android:title="@string/home_string_bottom_nav_menu"/>
-    <item android:icon="@drawable/search_24px" android:title="@string/search_string_bottom_nav_menu"/>
-    <item android:icon="@drawable/shopping_bag_speed_24px" android:title="@string/order_string_bottom_nav_menu"/>
-    <item android:icon="@drawable/account_circle_24px" android:title="@string/profile_string_bottom_nav_menu"/>
+    <item android:id="@+id/bottom_nav_home" android:icon="@drawable/home_24px" android:title="@string/home_string_bottom_nav_menu"/>
+    <item android:id="@+id/bottom_nav_search" android:icon="@drawable/search_24px" android:title="@string/search_string_bottom_nav_menu"/>
+    <item android:id="@+id/bottom_order" android:icon="@drawable/shopping_bag_speed_24px" android:title="@string/order_string_bottom_nav_menu"/>
+    <item android:id="@+id/bottom_profile" android:icon="@drawable/account_circle_24px" android:title="@string/profile_string_bottom_nav_menu"/>
 </menu>

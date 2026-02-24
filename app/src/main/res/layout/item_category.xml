@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -16,7 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Burgers"
-        android:textColor="@color/gary_color_search_primary"
+        android:textColor="@color/md_theme_scrim"
         android:textSize="16sp" />
 
     <ImageView
@@ -25,5 +24,4 @@
         android:layout_height="24dp"
         android:layout_marginStart="8dp"
         android:src="@drawable/burger" />
-
 </LinearLayout>
