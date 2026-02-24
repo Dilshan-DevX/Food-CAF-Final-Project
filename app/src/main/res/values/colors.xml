@@ -1,6 +1,12 @@
 <resources>
     <color name="md_theme_primary">#004D3A</color>
     <color name="btn_color_primary">#68BA7F</color>
+    <color name="Nav_header_color_primary">#68BA7F</color>
+
+    <color name="Grren_color_primary">#047857</color>
+
+    <color name="gary_color_search_primary">#732E2E2E</color>
+
     <color name="md_theme_onPrimary">#FFFFFF</color>
     <color name="md_theme_primaryContainer">#00674F</color>
     <color name="md_theme_onPrimaryContainer">#90E2C4</color>
