@@ -110,6 +110,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (savedInstanceState == null){
             loadFragment(new HomeFragment());
+            navigationView.setCheckedItem(R.id.side_nav_home);
+            bottomNavigationView.getMenu().findItem(R.id.bottom_nav_home).setChecked(true);
         }
 
     }
@@ -155,12 +157,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             navigationView.setCheckedItem(R.id.side_nav_settings);
 
         } else if (itemId == R.id.side_nav_login) {
-            // Login කෝඩ් එක මෙතනට දාන්න
+
         } else if (itemId == R.id.side_nav_logout) {
-            // Logout කෝඩ් එක මෙතනට දාන්න
+
         }
 
-        // Side menu එක open වෙලා තියෙනවා නම් ඒක close කරන්න
+
         if(drawerLayout.isDrawerOpen(androidx.core.view.GravityCompat.START)){
             drawerLayout.closeDrawer(androidx.core.view.GravityCompat.START);
         }
