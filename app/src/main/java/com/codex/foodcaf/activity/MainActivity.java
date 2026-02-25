@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
         setSupportActionBar(toolbar);
+
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
@@ -77,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Glide.with(this)
                 .asBitmap()
                 .load(R.drawable.applogo)
-                .override(100)
+                .override(80)
                 .into(imageView);
 
         Glide.with(this)
@@ -92,6 +93,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
         getOnBackPressedDispatcher().addCallback(this,new OnBackPressedCallback(true) {
+
             @Override
             public void handleOnBackPressed() {
 //                Toast.makeText(MainActivity.this, "Back pressed", Toast.LENGTH_SHORT).show();
@@ -106,7 +108,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
         bottomNavigationView.setOnItemSelectedListener(this);
 
-        loadFragment(new HomeFragment());
+        if (savedInstanceState == null){
+            loadFragment(new HomeFragment());
+        }
+
     }
 
 
@@ -116,29 +121,51 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int itemId = item.getItemId();
 
         if (itemId == R.id.side_nav_home || itemId == R.id.bottom_nav_home) {
-                loadFragment(new HomeFragment());
+            loadFragment(new HomeFragment());
+            navigationView.setCheckedItem(R.id.side_nav_home);
+            bottomNavigationView.getMenu().findItem(R.id.bottom_nav_home).setChecked(true);
+
         } else if (itemId == R.id.bottom_nav_search) {
-                loadFragment(new CategoryFragment());
-        }else if (itemId ==  R.id.bottom_order) {
+            loadFragment(new CategoryFragment());
+            bottomNavigationView.getMenu().findItem(R.id.bottom_nav_search).setChecked(true);
+
+        } else if (itemId == R.id.bottom_order) {
             loadFragment(new OrderFragment());
-        }else if (itemId == R.id.side_nav_profile || itemId == R.id.bottom_profile) {
+            bottomNavigationView.getMenu().findItem(R.id.bottom_order).setChecked(true);
+
+        } else if (itemId == R.id.side_nav_profile || itemId == R.id.bottom_profile) {
             loadFragment(new ProfileFragment());
-        }else if (itemId == R.id.side_nav_favorite) {
+            navigationView.setCheckedItem(R.id.side_nav_profile);
+            bottomNavigationView.getMenu().findItem(R.id.bottom_profile).setChecked(true);
+
+        } else if (itemId == R.id.side_nav_favorite) {
             loadFragment(new FavFragment());
-        }else if (itemId == R.id.side_nav_cart) {
+            navigationView.setCheckedItem(R.id.side_nav_favorite);
+
+        } else if (itemId == R.id.side_nav_cart) {
             loadFragment(new CartFragment());
-        }else if (itemId ==  R.id.side_nav_message) {
+            navigationView.setCheckedItem(R.id.side_nav_cart);
+
+        } else if (itemId == R.id.side_nav_message) {
             loadFragment(new MessageFragment());
-        }else if (itemId == R.id.side_nav_settings) {
+            navigationView.setCheckedItem(R.id.side_nav_message);
+
+        } else if (itemId == R.id.side_nav_settings) {
             loadFragment(new SettingsFragment());
-        }else if (itemId == R.id.side_nav_login) {
+            navigationView.setCheckedItem(R.id.side_nav_settings);
 
-        }else if (itemId == R.id.side_nav_logout) {
-
+        } else if (itemId == R.id.side_nav_login) {
+            // Login කෝඩ් එක මෙතනට දාන්න
+        } else if (itemId == R.id.side_nav_logout) {
+            // Logout කෝඩ් එක මෙතනට දාන්න
         }
 
+        // Side menu එක open වෙලා තියෙනවා නම් ඒක close කරන්න
+        if(drawerLayout.isDrawerOpen(androidx.core.view.GravityCompat.START)){
+            drawerLayout.closeDrawer(androidx.core.view.GravityCompat.START);
+        }
 
-        return false;
+        return true;
     }
 
     private void loadFragment(Fragment fragment) {
