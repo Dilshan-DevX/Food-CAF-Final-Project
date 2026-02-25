@@ -12,6 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FoodCAF">
         <activity
+            android:name=".activity.SignUpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.SigninActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.OpeningScreen3"
             android:exported="false" />
         <activity
