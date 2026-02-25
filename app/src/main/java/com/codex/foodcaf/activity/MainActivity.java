@@ -14,9 +14,20 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
 import com.codex.foodcaf.R;
+import com.codex.foodcaf.fragment.CartFragment;
+import com.codex.foodcaf.fragment.CategoryFragment;
+import com.codex.foodcaf.fragment.FavFragment;
+import com.codex.foodcaf.fragment.HomeFragment;
+import com.codex.foodcaf.fragment.MessageFragment;
+import com.codex.foodcaf.fragment.OrderFragment;
+import com.codex.foodcaf.fragment.ProfileFragment;
+import com.codex.foodcaf.fragment.SettingsFragment;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -94,25 +105,49 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         navigationView.setNavigationItemSelectedListener(this);
         bottomNavigationView.setOnItemSelectedListener(this);
+
+        loadFragment(new HomeFragment());
     }
 
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.side_nav_home | R.id.bottom_nav_home:
-                Toast.makeText(this, "Home", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.side_nav_profile | R.id.bottom_profile:
-                Toast.makeText(this, "Profile", Toast.LENGTH_SHORT).show();
-                break;
-                case R.id.side_nav_favorite:
-                Toast.makeText(this, "Favorite", Toast.LENGTH_SHORT).show();
-                break;
 
+        int itemId = item.getItemId();
+
+        if (itemId == R.id.side_nav_home || itemId == R.id.bottom_nav_home) {
+                loadFragment(new HomeFragment());
+        } else if (itemId == R.id.bottom_nav_search) {
+                loadFragment(new CategoryFragment());
+        }else if (itemId ==  R.id.bottom_order) {
+            loadFragment(new OrderFragment());
+        }else if (itemId == R.id.side_nav_profile || itemId == R.id.bottom_profile) {
+            loadFragment(new ProfileFragment());
+        }else if (itemId == R.id.side_nav_favorite) {
+            loadFragment(new FavFragment());
+        }else if (itemId == R.id.side_nav_cart) {
+            loadFragment(new CartFragment());
+        }else if (itemId ==  R.id.side_nav_message) {
+            loadFragment(new MessageFragment());
+        }else if (itemId == R.id.side_nav_settings) {
+            loadFragment(new SettingsFragment());
+        }else if (itemId == R.id.side_nav_login) {
+
+        }else if (itemId == R.id.side_nav_logout) {
 
         }
 
+
         return false;
+    }
+
+    private void loadFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.fragmentContainer,fragment);
+        transaction.commit();
+
+        /// single line execution
+//        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer,fragment).commit();
     }
 }
