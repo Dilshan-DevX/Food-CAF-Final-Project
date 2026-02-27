@@ -1,5 +1,6 @@
 package com.codex.foodcaf.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -158,7 +159,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         } else if (itemId == R.id.side_nav_login) {
 
+            Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
+            startActivity(intent);
+
         } else if (itemId == R.id.side_nav_logout) {
+
+            Intent intent = new Intent(MainActivity.this, SigninActivity.class);
+            startActivity(intent);
 
         }
 
