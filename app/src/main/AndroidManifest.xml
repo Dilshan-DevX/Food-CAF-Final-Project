@@ -20,26 +20,19 @@
         <activity
             android:name=".activity.SigninActivity"
             android:exported="false" />
+
         <activity
             android:name=".activity.OpeningScreen3"
             android:exported="false" />
+
         <activity
             android:name=".activity.OpeningScreen2"
             android:exported="false" />
+
         <activity
             android:name=".activity.OpeningScreen1"
             android:exported="false" />
-        <activity
-            android:name=".activity.TestActivity"
-            android:exported="true">
 
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
-        </activity>
         <activity
             android:name=".activity.SpalshActivity"
             android:exported="true"

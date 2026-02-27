@@ -2,6 +2,7 @@ package com.codex.foodcaf.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -122,6 +123,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
         int itemId = item.getItemId();
+
+        Menu navMenu = navigationView.getMenu();
+        Menu bottommenu = bottomNavigationView.getMenu();
+
+        for (int i = 0; i < navMenu.size(); i++){
+            navMenu.getItem(i).setChecked(false);
+        }
+
+
+        for (int i = 0; i < bottommenu.size(); i++){
+            bottommenu.getItem(i).setChecked(false);
+        }
 
         if (itemId == R.id.side_nav_home || itemId == R.id.bottom_nav_home) {
             loadFragment(new HomeFragment());
