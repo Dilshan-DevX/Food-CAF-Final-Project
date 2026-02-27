@@ -24,4 +24,19 @@
     <string name="Message">Message</string>
     <string name="Order">Order</string>
     <string name="Profile">Profile</string>
+    <string name="sign_in_text_signinbtn">SIGN IN</string>
+    <string name="forgot_password_text_signin">Forgot password?</string>
+    <string name="password_text_sigmin">Password</string>
+    <string name="email_text_signin_hint">Email</string>
+    <string name="sign_in_text_banerhead">Sign In</string>
+    <string name="don_t_have_an_account_text_signin">Don\'t have an account?</string>
+    <string name="sign_up_text_use_rederect_signup">Sign up.</string>
+    <string name="sign_up_text_baner">Sign up</string>
+    <string name="name_text_signup">Name</string>
+    <string name="email_text_signup">Email</string>
+    <string name="password_text_signup">Password</string>
+    <string name="confirm_password_text_signup">Confirm Password</string>
+    <string name="sign_up_text_signup_btn">SIGN UP</string>
+    <string name="already_have_an_account_text_sign_up">Already have an account?</string>
+    <string name="sign_in_text_in_signup">Sign in.</string>
 </resources>

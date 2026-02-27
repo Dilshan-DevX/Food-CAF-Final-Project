@@ -12,7 +12,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sign up"
+        android:text="@string/sign_up_text_baner"
         android:textColor="@color/md_theme_Text"
         android:textSize="32sp"
         android:textStyle="bold" />
@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:hint="NAME"
+        android:hint="@string/name_text_signup"
         app:boxCornerRadiusBottomEnd="24dp"
         app:boxCornerRadiusBottomStart="24dp"
         app:boxCornerRadiusTopEnd="24dp"
@@ -43,7 +43,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:hint="EMAIL"
+        android:hint="@string/email_text_signup"
         app:boxCornerRadiusBottomEnd="24dp"
         app:boxCornerRadiusBottomStart="24dp"
         app:boxCornerRadiusTopEnd="24dp"
@@ -64,7 +64,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:hint="PASSWORD"
+        android:hint="@string/password_text_signup"
         app:boxCornerRadiusBottomEnd="24dp"
         app:boxCornerRadiusBottomStart="24dp"
         app:boxCornerRadiusTopEnd="24dp"
@@ -85,7 +85,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:hint="CONFIRM PASSWORD"
+        android:hint="@string/confirm_password_text_signup"
         app:boxCornerRadiusBottomEnd="24dp"
         app:boxCornerRadiusBottomStart="24dp"
         app:boxCornerRadiusTopEnd="24dp"
@@ -106,7 +106,7 @@
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:layout_marginTop="32dp"
-        android:text="SIGN UP"
+        android:text="@string/sign_up_text_signup_btn"
         android:textSize="16sp"
         android:textStyle="bold"
         app:backgroundTint="@color/btn_color_primary"
@@ -121,7 +121,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Already have an account? "
+            android:text="@string/already_have_an_account_text_sign_up"
             android:textColor="#808080"
             android:textSize="14sp" />
 
@@ -129,7 +129,7 @@
             android:id="@+id/signup_txt_signin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sign in."
+            android:text="@string/sign_in_text_in_signup"
             android:textColor="@color/md_theme_primary"
             android:textSize="14sp"
             android:textStyle="bold" />
