@@ -45,7 +45,13 @@ dependencies {
     androidTestImplementation libs.espresso.core
     implementation libs.glide
     implementation libs.picasso
+
+    compileOnly("org.projectlombok:lombok:1.18.42")
+    annotationProcessor("org.projectlombok:lombok:1.18.42")
+
     implementation platform('com.google.firebase:firebase-bom:34.9.0')
     implementation 'com.google.firebase:firebase-analytics'
     implementation("com.google.firebase:firebase-auth")
+    implementation("com.google.firebase:firebase-firestore")
+
 }

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -22,6 +23,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
 import com.codex.foodcaf.R;
+import com.codex.foodcaf.databinding.ActivityMainBinding;
+import com.codex.foodcaf.databinding.SideNavHeaderBinding;
 import com.codex.foodcaf.fragment.CartFragment;
 import com.codex.foodcaf.fragment.CategoryFragment;
 import com.codex.foodcaf.fragment.FavFragment;
@@ -37,6 +40,8 @@ import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, NavigationBarView.OnItemSelectedListener {
 
+    private ActivityMainBinding binding;
+    private SideNavHeaderBinding sideNavHeaderBinding;
      private DrawerLayout     drawerLayout;
     private MaterialToolbar toolbar;
     private NavigationView navigationView;
@@ -48,16 +53,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_main);
 
+
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        View headerView = binding.sideNavView.getHeaderView(0);
+        sideNavHeaderBinding = SideNavHeaderBinding.bind(headerView);
+
+        imageView = findViewById(R.id.nav_Logo);
 
         ImageView menuicon = findViewById(R.id.menu_Logo);
 
-        drawerLayout = findViewById(R.id.drawertLayout);
-        toolbar = findViewById(R.id.toolbar);
-        navigationView = findViewById(R.id.sideNavView);
-        bottomNavigationView = findViewById(R.id.bottomNavView);
+        drawerLayout = binding.drawertLayout;
+        toolbar = binding.toolbar;
+        navigationView = binding.sideNavView;
+        bottomNavigationView = binding.bottomNavView;
 
 
         setSupportActionBar(toolbar);

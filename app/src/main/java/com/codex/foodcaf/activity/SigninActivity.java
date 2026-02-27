@@ -2,6 +2,7 @@ package com.codex.foodcaf.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Toast;
 
@@ -44,23 +45,52 @@ public class SigninActivity extends AppCompatActivity {
 
         binding.signinBtnSignin.setOnClickListener(view -> {
 
-            String email = binding.signinInputEmail.getText().toString();
-            String password = binding.signinInputPassword.getText().toString();
+            String email = binding.signinInputEmail.getText().toString().trim();
+            String password = binding.signinInputPassword.getText().toString().trim();
+
+
+            if (email.isEmpty()){
+                binding.signinInputEmail.setError("Email is required");
+                binding.signinInputEmail.requestFocus();
+                return;
+            }
+
+            if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+                binding.signinInputPassword.setError("Enter Valid Email");
+                binding.signinInputEmail.requestFocus();
+                return;
+            }
+
+            if (password.isEmpty()) {
+                binding.signinInputPassword.setError("Password is required");
+                binding.signinInputPassword.requestFocus();
+                return;
+
+            }
+
+
+
+
+
 
             firebaseAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if(task.isSuccessful()){
-                         updateUI(firebaseAuth.getCurrentUser());
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if(task.isSuccessful()){
+                            updateUI(firebaseAuth.getCurrentUser());
 //                        Intent intent = new Intent(SigninActivity.this,MainActivity.class);
 //                        startActivity(intent);
 //                        finish();
-                    }else {
-                        Toast.makeText(SigninActivity.this, "Authentication Failed", Toast.LENGTH_SHORT).show();
-                    }
+                        }else {
+                            Toast.makeText(SigninActivity.this, "Authentication Failed", Toast.LENGTH_SHORT).show();
+                        }
 
-                }
-            });
+                    }
+                });
+
+
+
+
         });
 
 //        findViewById(R.id.signin_txt_signup).setOnClickListener(view -> {
