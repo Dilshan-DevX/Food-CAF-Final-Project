@@ -147,62 +147,75 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
 
         if (currentUser != null) {
-            firebaseFirestore.collection("users").document(currentUser.getUid()).get()
-                    .addOnSuccessListener(documentSnapshot -> {
-
-                        if (documentSnapshot.exists()){
-
-                            User user = documentSnapshot.toObject(User.class);
-                            sideNavHeaderBinding.headerUserName.setText(user.getName());
-                            sideNavHeaderBinding.headerUserEmail.setText(user.getEmail());
-
-                            Glide.with(MainActivity.this)
-                                    .load(user.getProfilePicUrl())
-                                    .circleCrop()
-                                    .into(sideNavHeaderBinding.HeaderPic);
-                        }else {
-                            Log.e("FireStore","Document does not exist");
-                        }
-                    }).addOnFailureListener(e -> {
-                        Log.e("FireStore","Error"+e.getMessage());
-                    });
-
-//            firebaseFirestore.collection("users").document(userId).get()
+//            firebaseFirestore.collection("users").document(currentUser.getUid()).get()
 //                    .addOnSuccessListener(documentSnapshot -> {
-//                        if (documentSnapshot.exists()) {
+//
+//                        if (documentSnapshot.exists()){
+//
 //                            User user = documentSnapshot.toObject(User.class);
-//                            if (user != null) {
+//                            sideNavHeaderBinding.headerUserName.setText(user.getName());
+//                            sideNavHeaderBinding.headerUserEmail.setText(user.getEmail());
 //
-//                                sideNavHeaderBinding.headerUserName.setText(user.getName() != null ? user.getName() : "Food Caf User");
-//                                sideNavHeaderBinding.headerUserEmail.setText(user.getEmail() != null ? user.getEmail() : "No Email");
-//
-//                                String profilePicUrl = user.getProfilePicUrl();
-//
-//                                if (profilePicUrl != null && !profilePicUrl.isEmpty()) {
-//
-//                                    Log.d("ProfilePicUrl", profilePicUrl);
-//
-//                                    Glide.with(MainActivity.this)
-//                                            .load(profilePicUrl)
-//                                            .circleCrop()
-//                                            .placeholder(R.drawable.man)
-//                                            .error(R.drawable.man)
-//                                            .into(sideNavHeaderBinding.HeaderPic);
-//
-//                                } else {
-//
-//                                    sideNavHeaderBinding.HeaderPic.setImageResource(R.drawable.man);
-//
-//                                }
-//                            }
+//                            Glide.with(MainActivity.this)
+//                                    .load(user.getProfilePicUrl())
+//                                    .circleCrop()
+//                                    .into(sideNavHeaderBinding.HeaderPic);
+//                        }else {
+//                            Log.e("FireStore","Document does not exist");
 //                        }
-//                    })
-//                    .addOnFailureListener(e -> {
-//                        Toast.makeText(MainActivity.this, "Failed to load profile data", Toast.LENGTH_SHORT).show();
+//                    }).addOnFailureListener(e -> {
+//                        Log.e("FireStore","Error"+e.getMessage());
 //                    });
 
+///
+
+            firebaseFirestore.collection("users").document(currentUser.getUid()).get()
+                    .addOnSuccessListener(documentSnapshot -> {
+                        if (documentSnapshot.exists()) {
+                            User user = documentSnapshot.toObject(User.class);
+                            if (user != null) {
+
+                                sideNavHeaderBinding.headerUserName.setText(user.getName() != null ? user.getName() : "Food Caf User");
+                                sideNavHeaderBinding.headerUserEmail.setText(user.getEmail() != null ? user.getEmail() : "No Email");
+
+                                String profilePicUrl = user.getProfilePicUrl();
+
+                                if (profilePicUrl != null && !profilePicUrl.isEmpty()) {
+
+                                    Log.d("ProfilePicUrl", profilePicUrl);
+
+                                    Glide.with(MainActivity.this)
+                                            .load(profilePicUrl)
+                                            .circleCrop()
+                                            .placeholder(R.drawable.man)
+                                            .error(R.drawable.man)
+                                            .into(sideNavHeaderBinding.HeaderPic);
+
+                                } else {
+
+                                    sideNavHeaderBinding.HeaderPic.setImageResource(R.drawable.man);
+
+                                }
+                            }
+                        }
+                    })
+                    .addOnFailureListener(e -> {
+                        Toast.makeText(MainActivity.this, "Failed to load profile data", Toast.LENGTH_SHORT).show();
+                    });
+            navigationView.getMenu().findItem(R.id.side_nav_login).setVisible(false);
+
+            navigationView.getMenu().findItem(R.id.side_nav_cart).setVisible(true);
+            navigationView.getMenu().findItem(R.id.side_nav_favorite).setVisible(true);
+            navigationView.getMenu().findItem(R.id.side_nav_profile).setVisible(true);
+            navigationView.getMenu().findItem(R.id.side_nav_message).setVisible(true);
+            navigationView.getMenu().findItem(R.id.side_nav_logout).setVisible(true);
 
 
+        }else{
+            Glide.with(MainActivity.this)
+                    .load(R.drawable.fragment_profile)
+                    .circleCrop()
+                    .into(sideNavHeaderBinding.HeaderPic);
         }
 
 //        firebaseAuth.signOut();
@@ -241,6 +254,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             bottomNavigationView.getMenu().findItem(R.id.bottom_order).setChecked(true);
 
         } else if (itemId == R.id.side_nav_profile || itemId == R.id.bottom_profile) {
+
+            if (firebaseAuth.getCurrentUser() == null){
+                Intent intent = new Intent(MainActivity.this,SigninActivity.class);
+                startActivity(intent);
+                finish();
+
+            }
             loadFragment(new ProfileFragment());
             navigationView.setCheckedItem(R.id.side_nav_profile);
             bottomNavigationView.getMenu().findItem(R.id.bottom_profile).setChecked(true);
@@ -250,6 +270,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             navigationView.setCheckedItem(R.id.side_nav_favorite);
 
         } else if (itemId == R.id.side_nav_cart) {
+            if (firebaseAuth.getCurrentUser() == null){
+                Intent intent = new Intent(MainActivity.this,SigninActivity.class);
+                startActivity(intent);
+                finish();
+
+            }
             loadFragment(new CartFragment());
             navigationView.setCheckedItem(R.id.side_nav_cart);
 
@@ -268,8 +294,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         } else if (itemId == R.id.side_nav_logout) {
 
-            Intent intent = new Intent(MainActivity.this, SigninActivity.class);
-            startActivity(intent);
+            firebaseAuth.signOut();
+            loadFragment(new HomeFragment());
+            navigationView.getMenu().clear();
+            navigationView.inflateMenu(R.menu.side_nav_menu);
+
+            navigationView.removeHeaderView(sideNavHeaderBinding.getRoot());
+            navigationView.inflateHeaderView(R.layout.side_nav_header);
 
         }
 

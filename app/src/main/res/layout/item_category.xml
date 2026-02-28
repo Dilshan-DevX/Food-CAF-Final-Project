@@ -1,27 +1,58 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginEnd="8dp"
-    android:background="@drawable/bg_category_selector"
-    android:clickable="true"
-    android:focusable="true"
-    android:gravity="center"
-    android:orientation="horizontal"
-    android:paddingHorizontal="16dp"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/categoryCard"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:layout_marginBottom="16dp"
+    app:cardCornerRadius="24dp"
+    app:cardElevation="0dp"
+    app:cardBackgroundColor="#FAD7A1"> <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingHorizontal="20dp"
     android:paddingVertical="10dp">
 
     <TextView
-        android:id="@+id/categoryName"
-        android:layout_width="wrap_content"
+        android:id="@+id/categoryTitle"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Burgers"
-        android:textColor="@color/md_theme_scrim"
-        android:textSize="16sp" />
+        android:layout_marginEnd="16dp"
+        android:text="Food"
+        android:textColor="#222222"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/categorySubtitle"
+        app:layout_constraintEnd_toStartOf="@+id/categoryImage"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <TextView
+        android:id="@+id/categorySubtitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="16dp"
+        android:text="Lets order some food and And"
+        android:textColor="#777777"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/categoryImage"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/categoryTitle" />
 
     <ImageView
-        android:id="@+id/categoryIcon"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginStart="8dp"
-        android:src="@drawable/burger" />
-</LinearLayout>
+        android:id="@+id/categoryImage"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:scaleType="centerCrop"
+        tools:srcCompat="@tools:sample/avatars"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>
