@@ -9,7 +9,7 @@
     >
 
     <ImageView
-        android:id="@+id/profileImage"
+        android:id="@+id/HeaderPic"
         android:layout_width="80dp"
         android:layout_height="80dp"
         tools:srcCompat="@tools:sample/avatars"
@@ -19,24 +19,24 @@
         />
 
     <TextView
-        android:id="@+id/userName"
+        android:id="@+id/headerUserName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_marginStart="120dp"
-        android:text="Tharindu"
+        android:text="Food Caf User"
         android:textColor="@color/md_theme_scrim"
         android:textSize="24sp"
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/userEmail"
+        android:id="@+id/headerUserEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_marginStart="120dp"
         android:layout_marginTop="20dp"
-        android:text="Tharindu@gmail.com"
+        android:text="******@gmail.com"
         android:textColor="@color/md_theme_scrim"
         android:textStyle="bold" />
 

@@ -2,6 +2,7 @@ package com.codex.foodcaf.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,10 +34,14 @@ import com.codex.foodcaf.fragment.MessageFragment;
 import com.codex.foodcaf.fragment.OrderFragment;
 import com.codex.foodcaf.fragment.ProfileFragment;
 import com.codex.foodcaf.fragment.SettingsFragment;
+import com.codex.foodcaf.model.User;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, NavigationBarView.OnItemSelectedListener {
 
@@ -47,8 +52,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private NavigationView navigationView;
 
     private ImageView imageView;
-
     private BottomNavigationView bottomNavigationView;
+
+    private FirebaseFirestore firebaseFirestore;
+    private FirebaseAuth firebaseAuth;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +68,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         View headerView = binding.sideNavView.getHeaderView(0);
         sideNavHeaderBinding = SideNavHeaderBinding.bind(headerView);
+
+        
+
 
         imageView = findViewById(R.id.nav_Logo);
 
@@ -126,6 +137,75 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             navigationView.setCheckedItem(R.id.side_nav_home);
             bottomNavigationView.getMenu().findItem(R.id.bottom_nav_home).setChecked(true);
         }
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseFirestore = FirebaseFirestore.getInstance();
+
+
+        //set header details
+
+        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+
+        if (currentUser != null) {
+            firebaseFirestore.collection("users").document(currentUser.getUid()).get()
+                    .addOnSuccessListener(documentSnapshot -> {
+
+                        if (documentSnapshot.exists()){
+
+                            User user = documentSnapshot.toObject(User.class);
+                            sideNavHeaderBinding.headerUserName.setText(user.getName());
+                            sideNavHeaderBinding.headerUserEmail.setText(user.getEmail());
+
+                            Glide.with(MainActivity.this)
+                                    .load(user.getProfilePicUrl())
+                                    .circleCrop()
+                                    .into(sideNavHeaderBinding.HeaderPic);
+                        }else {
+                            Log.e("FireStore","Document does not exist");
+                        }
+                    }).addOnFailureListener(e -> {
+                        Log.e("FireStore","Error"+e.getMessage());
+                    });
+
+//            firebaseFirestore.collection("users").document(userId).get()
+//                    .addOnSuccessListener(documentSnapshot -> {
+//                        if (documentSnapshot.exists()) {
+//                            User user = documentSnapshot.toObject(User.class);
+//                            if (user != null) {
+//
+//                                sideNavHeaderBinding.headerUserName.setText(user.getName() != null ? user.getName() : "Food Caf User");
+//                                sideNavHeaderBinding.headerUserEmail.setText(user.getEmail() != null ? user.getEmail() : "No Email");
+//
+//                                String profilePicUrl = user.getProfilePicUrl();
+//
+//                                if (profilePicUrl != null && !profilePicUrl.isEmpty()) {
+//
+//                                    Log.d("ProfilePicUrl", profilePicUrl);
+//
+//                                    Glide.with(MainActivity.this)
+//                                            .load(profilePicUrl)
+//                                            .circleCrop()
+//                                            .placeholder(R.drawable.man)
+//                                            .error(R.drawable.man)
+//                                            .into(sideNavHeaderBinding.HeaderPic);
+//
+//                                } else {
+//
+//                                    sideNavHeaderBinding.HeaderPic.setImageResource(R.drawable.man);
+//
+//                                }
+//                            }
+//                        }
+//                    })
+//                    .addOnFailureListener(e -> {
+//                        Toast.makeText(MainActivity.this, "Failed to load profile data", Toast.LENGTH_SHORT).show();
+//                    });
+
+
+
+        }
+
+//        firebaseAuth.signOut();
 
     }
 
