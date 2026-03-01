@@ -12,64 +12,86 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.codex.foodcaf.R;
 import com.codex.foodcaf.model.Category;
+import com.codex.foodcaf.model.Product;
 
 import java.util.List;
 
 public class CatListAdapter extends RecyclerView.Adapter<CatListAdapter.ViewHolder> {
 
-    private List<Category> categories;
-    private OnCategoryClickListener listener;
+    private List<Product> products;
+    private OnListingItemClickListener listener;
 
-    public CatListAdapter(List<Category> categories, OnCategoryClickListener listener) {
-        this.categories = categories;
+    public CatListAdapter(List<Product> products, OnListingItemClickListener listener) {
+        this.products = products;
         this.listener = listener;
     }
 
     @NonNull
     @Override
     public CatListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-       View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_category,parent,false);
+       View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_listing,parent,false);
 
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull CatListAdapter.ViewHolder holder, int position) {
-        Category  category = categories.get(position);
-        holder.categoryTitle.setText(category.getCategoryName());
-        holder.categorySubtitle.setText(category.getCategorySubtitle());
+        Product  product = products.get(position);
+
+        holder.foodTitle.setText(product.getFoodTitle());
+        holder.foodRating.setText(product.getFoodRating());
+        holder.foodTime.setText(product.getFoodTime());
+        holder.foodDetail.setText(product.getFoodDetail());
+        holder.foodPrice.setText(product.getProductPrice()+"");
+        holder.foodTime.setText(product.getFoodTime());
+        if (product.isAvailability()) {
+            holder.availability.setColorFilter(android.graphics.Color.parseColor("#52C85A"));
+        } else {
+            holder.availability.setColorFilter(android.graphics.Color.parseColor("#F44336"));
+        }
+
             Glide.with(holder.itemView.getContext())
-                    .load(category.getCategoryImage())
+                    .load(product.getProductImage())
                     .circleCrop()
-                    .into(holder.categoryImage);
+                    .into(holder.foodImage);
+
         holder.itemView.setOnClickListener(view -> {
             if (listener != null) {
-                listener.onCategoryClick(category);
+                listener.onListingItemClick(product);
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return categories.size();
+        return products.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView categoryImage;
-        TextView categoryTitle;
-        TextView categorySubtitle;
+        ImageView foodImage;
+        TextView foodTitle;
+        TextView foodRating;
+        TextView foodPrice;
+        TextView foodTime;
+        TextView foodDetail;
+        ImageView availability;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            categoryImage = itemView.findViewById(R.id.categoryImage);
-            categoryTitle = itemView.findViewById(R.id.categoryTitle);
-            categorySubtitle = itemView.findViewById(R.id.categorySubtitle);
+            foodImage = itemView.findViewById(R.id.foodImage);
+            foodTitle = itemView.findViewById(R.id.foodTitle);
+            foodRating = itemView.findViewById(R.id.foodRating);
+            foodPrice = itemView.findViewById(R.id.foodPrice);
+            foodTime = itemView.findViewById(R.id.foodTime);
+            foodDetail = itemView.findViewById(R.id.foodCalories);
+            availability = itemView.findViewById(R.id.avlb);
+
         }
     }
 
-    public interface OnCategoryClickListener {
-        void onCategoryClick(Category category);
+    public interface OnListingItemClickListener {
+        void onListingItemClick(Product product);
     }
 
 }

@@ -48,7 +48,7 @@ public class CategoryFragment extends Fragment {
 //        binding.recyclerViewCategoryPage.setLayoutManager(new LinearLayoutManager();
 
         FirebaseFirestore db =  FirebaseFirestore.getInstance();
-//
+
 //        Category c1 = new Category("cat1", "Pizza", "https://picsum.photos/200/300", "Delicious cheesy pizzas and slices");
 //        Category c2 = new Category("cat2", "Fast Food", "https://picsum.photos/200/300", "Burgers, French Fries and Submarines");
 //        Category c3 = new Category("cat3", "Sri Lankan", "https://picsum.photos/200/300", "Authentic Rice & Curry, Kottu and Hoppers");
@@ -82,7 +82,16 @@ public class CategoryFragment extends Fragment {
                         adapter = new CategoryAdapter(categories, new CategoryAdapter.OnCategoryClickListener() {
                             @Override
                             public void onCategoryClick(Category category) {
-                                Toast.makeText(getContext(), category.getCategoryName(), Toast.LENGTH_SHORT).show();
+
+                                Bundle bundle = new Bundle();
+                                bundle.putString("categoryId",category.getCategoryId());
+
+                                CatListFragment fragment = new CatListFragment();
+                                fragment.setArguments(bundle);
+
+                                getParentFragmentManager().beginTransaction()
+                                        .replace(R.id.fragmentContainer,fragment)
+                                        .addToBackStack(null).commit();
                             }
                         });
 
