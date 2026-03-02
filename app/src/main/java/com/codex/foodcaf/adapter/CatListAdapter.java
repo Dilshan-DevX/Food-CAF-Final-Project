@@ -42,7 +42,7 @@ public class CatListAdapter extends RecyclerView.Adapter<CatListAdapter.ViewHold
         holder.foodRating.setText(product.getFoodRating());
         holder.foodTime.setText(product.getFoodTime());
         holder.foodDetail.setText(product.getFoodDetail());
-        holder.foodPrice.setText(product.getProductPrice()+"");
+        holder.foodPrice.setText("Rs "+product.getProductPrice());
         holder.foodTime.setText(product.getFoodTime());
         if (product.isAvailability()) {
             holder.availability.setColorFilter(android.graphics.Color.parseColor("#52C85A"));
@@ -51,8 +51,8 @@ public class CatListAdapter extends RecyclerView.Adapter<CatListAdapter.ViewHold
         }
 
             Glide.with(holder.itemView.getContext())
-                    .load(product.getProductImage())
-                    .circleCrop()
+                    .load(product.getProductImage().get(0))
+//                    .circleCrop()
                     .into(holder.foodImage);
 
         holder.itemView.setOnClickListener(view -> {
