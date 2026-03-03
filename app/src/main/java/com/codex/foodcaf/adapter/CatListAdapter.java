@@ -41,7 +41,7 @@ public class CatListAdapter extends RecyclerView.Adapter<CatListAdapter.ViewHold
         holder.foodTitle.setText(product.getFoodTitle());
         holder.foodRating.setText(product.getFoodRating());
         holder.foodTime.setText(product.getFoodTime());
-        holder.foodDetail.setText(product.getFoodDetail());
+        holder.foodDetail.setText(product.getIngrideint());
         holder.foodPrice.setText("Rs "+product.getProductPrice());
         holder.foodTime.setText(product.getFoodTime());
         if (product.isAvailability()) {

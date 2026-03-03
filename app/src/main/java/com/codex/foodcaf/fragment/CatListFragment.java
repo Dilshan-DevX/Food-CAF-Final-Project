@@ -126,6 +126,16 @@ public class CatListFragment extends Fragment {
 
                             adapter = new CatListAdapter(products,product -> {
 
+                                Bundle bundle = new Bundle();
+                                bundle.putString("productId",product.getProductId());
+
+                                SingleProductFragment singleProductFragment = new SingleProductFragment();
+                                singleProductFragment.setArguments(bundle);
+
+                                getParentFragmentManager().beginTransaction()
+                                            .replace(R.id.fragmentContainer,singleProductFragment)
+                                            .addToBackStack(null)
+                                            .commit();
                             });
                             binding.recyclerViewFood.setAdapter(adapter);
                         }
