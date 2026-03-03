@@ -40,7 +40,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         holder.categorySubtitle.setText(category.getCategorySubtitle());
             Glide.with(holder.itemView.getContext())
                     .load(category.getCategoryImage())
-                    .circleCrop()
                     .into(holder.categoryImage);
         holder.itemView.setOnClickListener(view -> {
             if (listener != null) {

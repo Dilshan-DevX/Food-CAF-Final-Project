@@ -1,5 +1,7 @@
 package com.codex.foodcaf.model;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,7 +18,7 @@ public class Product {
     private String foodRating;
     private String foodTitle;
     private double productPrice;
-    private String productImage;
+    private List<String> productImage;
     private String foodTime;
     private String foodDetail;
     private boolean availability;

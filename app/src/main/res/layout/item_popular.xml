@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="160dp"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="16dp"
+    android:layout_marginVertical="8dp"
+    app:cardBackgroundColor="@color/md_theme_itemPop"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="2dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/imgPopContainer"
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/imgPopImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_margin="8dp"
+            app:cardBackgroundColor="#66000000"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/btnPopFav"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_gravity="center"
+                android:src="@drawable/favorite_24px"
+                app:tint="#FFFFFF" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:id="@+id/txtPopTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="12dp"
+            android:text="Big Burger"
+            android:textColor="@color/md_theme_Text2"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:singleLine="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imgPopContainer" />
+
+        <ImageView
+            android:id="@+id/imgStar"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_marginTop="6dp"
+            android:src="@android:drawable/star_on"
+            app:tint="#FFB300"
+            app:layout_constraintStart_toStartOf="@id/txtPopTitle"
+            app:layout_constraintTop_toBottomOf="@id/txtPopTitle" />
+
+        <TextView
+            android:id="@+id/txtPopRating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="4.5"
+            android:textColor="@color/md_theme_Text2"
+            android:textSize="13sp"
+            app:layout_constraintBottom_toBottomOf="@id/imgStar"
+            app:layout_constraintStart_toEndOf="@id/imgStar"
+            app:layout_constraintTop_toTopOf="@id/imgStar" />
+
+        <TextView
+            android:id="@+id/txtPopPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="12dp"
+            android:text="$3.00"
+            android:textColor="@color/md_theme_Text2"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/txtPopTitle"
+            app:layout_constraintTop_toBottomOf="@id/txtPopRating" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/btnAddPop"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="12dp"
+            app:cardBackgroundColor="#2A2A2A"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:src="@android:drawable/ic_input_add"
+                app:tint="#FFFFFF" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>
