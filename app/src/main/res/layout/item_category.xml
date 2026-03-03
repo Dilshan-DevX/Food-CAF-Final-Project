@@ -9,7 +9,7 @@
 
 
     android:layout_marginBottom="10dp"
-    app:cardCornerRadius="24dp"
+    app:cardCornerRadius="38dp"
     app:cardElevation="6dp"
     app:cardBackgroundColor="@color/md_theme_itemPop"
     android:clickable="true"
@@ -20,20 +20,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingStart="24dp"
-        android:paddingEnd="16dp"
-        android:paddingVertical="18dp">
+        android:paddingEnd="0dp"
+        android:paddingVertical="0dp">
 
         <TextView
             android:id="@+id/categoryTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="16dp"
+            android:fontFamily="sans-serif-medium"
             android:text="Food"
             android:textColor="@color/md_theme_Text2"
             android:textSize="22sp"
             android:textStyle="bold"
-            android:fontFamily="sans-serif-medium"
             app:layout_constraintEnd_toStartOf="@+id/imageContainer"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -43,21 +45,23 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
             android:layout_marginEnd="16dp"
+            android:lineSpacingExtra="2dp"
             android:text="Lets order some food and more"
             android:textColor="@color/md_theme_Text2"
             android:textSize="14sp"
-            android:lineSpacingExtra="2dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/imageContainer"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/categoryTitle" />
+            app:layout_constraintTop_toBottomOf="@+id/categoryTitle"
+            app:layout_constraintVertical_bias="0.0" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/imageContainer"
-            android:layout_width="76dp"
-            android:layout_height="76dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             app:cardCornerRadius="38dp"
-            app:cardBackgroundColor="#FFFFFF"
+            app:cardBackgroundColor="@color/md_theme_itemCard_bg"
             app:cardElevation="2dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -65,8 +69,8 @@
 
             <ImageView
                 android:id="@+id/categoryImage"
-                android:layout_width="66dp"
-                android:layout_height="66dp"
+                android:layout_width="99dp"
+                android:layout_height="99dp"
                 android:layout_gravity="center"
                 android:scaleType="centerCrop"
                 tools:srcCompat="@tools:sample/avatars" />

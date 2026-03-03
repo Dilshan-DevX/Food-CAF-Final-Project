@@ -21,6 +21,7 @@ public class Product {
     private List<String> productImage;
     private String foodTime;
     private String foodDetail;
+    private String ingrideint;
     private boolean availability;
 
 }

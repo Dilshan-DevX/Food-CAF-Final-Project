@@ -18,6 +18,10 @@
 
     <color name="md_theme_itemPop">#9924282E</color>
 
+    <color name="md_theme_itemCard_bg">#551E1E21</color>
+
+    <color name="md_theme_dotind">#BFC9D1</color>
+
     <color name="md_theme_onPrimary">#00382A</color>
     <color name="md_theme_primaryContainer">#00674F</color>
     <color name="md_theme_onPrimaryContainer">#90E2C4</color>
