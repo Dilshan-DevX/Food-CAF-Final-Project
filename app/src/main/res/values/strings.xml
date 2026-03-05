@@ -39,4 +39,5 @@
     <string name="sign_up_text_signup_btn">SIGN UP</string>
     <string name="already_have_an_account_text_sign_up">Already have an account?</string>
     <string name="sign_in_text_in_signup">Sign in.</string>
+    <string name="popular_now">Popular now</string>
 </resources>

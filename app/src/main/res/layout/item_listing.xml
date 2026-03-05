@@ -78,7 +78,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="Chicken Pad Thai"
-            android:textColor="#222222"
+            android:textColor="@color/md_theme_Text2"
             android:textSize="12sp"
             android:textStyle="bold"
             android:maxLines="2"
