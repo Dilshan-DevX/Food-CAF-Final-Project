@@ -23,5 +23,19 @@ public class Product {
     private String foodDetail;
     private String ingrideint;
     private boolean availability;
+    private List<Attribute> attribute;
+
+
+
+    @Data
+    @Builder
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class Attribute {
+        @com.google.firebase.firestore.PropertyName("porsion")
+        private String name;
+        private String type;
+        private List<String> values;
+    }
 
 }

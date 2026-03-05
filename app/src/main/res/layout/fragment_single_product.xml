@@ -200,7 +200,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="15dp"
                 android:text="Description"
                 android:textColor="@color/md_theme_Text2"
                 android:textSize="18sp"
@@ -210,16 +210,23 @@
                 android:id="@+id/txtDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="5dp"
                 android:lineSpacingExtra="4dp"
                 android:text="A hamburger, or simply burger, is a food consisting of fillings — usually a patty of ground meat, typically beef..."
                 android:textColor="#777777"
                 android:textSize="14sp" />
 
             <LinearLayout
+                android:id="@+id/productAtt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:layout_marginTop="5dp"
+                android:orientation="vertical">
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="15dp"
                 android:orientation="horizontal"
                 android:weightSum="2">
 
@@ -264,15 +271,14 @@
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvPopularNow"
+
+            <include
+                android:id="@+id/populer_section"
+                layout="@layout/item_section"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:clipToPadding="false"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/item_popular" />
+                android:layout_height="wrap_content"/>
 
         </LinearLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

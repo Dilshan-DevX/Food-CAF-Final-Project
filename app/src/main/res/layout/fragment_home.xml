@@ -7,9 +7,26 @@
 
 
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="12dp"
+        android:layout_marginStart="10dp"
+        android:text="Popular now"
+        android:textColor="@color/md_theme_Text2"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+
+    <include
+        android:id="@+id/HomePop_section"
+        layout="@layout/item_section"
+        android:layout_marginTop="55dp"
+        android:layout_marginStart="10dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="@string/Home" />
+        android:layout_height="wrap_content"/>
+
+
+
 
 </FrameLayout>
