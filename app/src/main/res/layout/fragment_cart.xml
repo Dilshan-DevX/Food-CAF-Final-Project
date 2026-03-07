@@ -11,7 +11,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginStart="24dp"
-    android:layout_marginTop="24dp"
+    android:layout_marginTop="10dp"
     android:text="My Cart"
     android:textColor="@color/md_theme_Text2"
     android:textSize="28sp"
@@ -23,7 +23,7 @@
         android:id="@+id/btnCartMenu"
         android:layout_width="45dp"
         android:layout_height="45dp"
-        android:layout_marginTop="18dp"
+        android:layout_marginTop="9dp"
         android:layout_marginEnd="15dp"
         app:cardBackgroundColor="#FFFFFF"
         app:cardCornerRadius="22.5dp"
@@ -37,14 +37,16 @@
             android:layout_height="24dp"
             android:layout_gravity="center"
             android:src="@drawable/favorite_24px"
-            app:tint="#555555"/>
+            app:tint="#555555"
+         />
+
     </com.google.android.material.card.MaterialCardView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/cartRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="15dp"
         android:clipToPadding="false"
         android:paddingBottom="20dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
