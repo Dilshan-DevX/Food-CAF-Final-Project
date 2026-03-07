@@ -11,80 +11,102 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.codex.foodcaf.R;
+import com.codex.foodcaf.model.CartItem;
 import com.codex.foodcaf.model.Product;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
-    private List<Product> products;
+    private List<CartItem> cartItems;
     private OnListingItemClickListener listener;
 
-    public CartAdapter(List<Product> products, OnListingItemClickListener listener) {
-        this.products = products;
+    public CartAdapter(List<CartItem> cartItems, OnListingItemClickListener listener) {
+        this.cartItems = cartItems;
         this.listener = listener;
     }
 
     @NonNull
     @Override
     public CartAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-       View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_listing,parent,false);
+       View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_cart,parent,false);
 
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull CartAdapter.ViewHolder holder, int position) {
-        Product  product = products.get(position);
+        CartItem cartItem = cartItems.get(position);
 
-        holder.foodTitle.setText(product.getFoodTitle());
-        holder.foodRating.setText(product.getFoodRating());
-        holder.foodTime.setText(product.getFoodTime());
-        holder.foodDetail.setText(product.getIngrideint());
-        holder.foodPrice.setText("Rs "+product.getProductPrice());
-        holder.foodTime.setText(product.getFoodTime());
-        if (product.isAvailability()) {
-            holder.availability.setColorFilter(android.graphics.Color.parseColor("#52C85A"));
+        double unitPrice = cartItem.getUnitPrice();
+
+        holder.foodPrice.setText("LKR" + cartItem.getProductPrice());
+        holder.foodQty.setText(String.format("%02d", cartItem.getQty()));
+
+
+        if (cartItem.getAttributes() != null && !cartItem.getAttributes().isEmpty()) {
+            String selectedPortion = cartItem.getAttributes().get(0).getValues().get(0);
+            holder.foodPortion.setText(selectedPortion);
         } else {
-            holder.availability.setColorFilter(android.graphics.Color.parseColor("#F44336"));
+            holder.foodPortion.setText("Regular");
         }
 
-            Glide.with(holder.itemView.getContext())
-                    .load(product.getProductImage().get(0))
-//                    .circleCrop()
-                    .into(holder.foodImage);
 
-        holder.itemView.setOnClickListener(view -> {
-            if (listener != null) {
-                listener.onListingItemClick(product);
-            }
-        });
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("products")
+                .whereEqualTo("productId", cartItem.getProductId())
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot qd) {
+                        if (!qd.isEmpty()) {
+                            Product product = qd.getDocuments().get(0).toObject(Product.class);
+
+                            // Title එක සෙට් කිරීම
+                            holder.foodTitle.setText(product.getFoodTitle());
+
+                            // පින්තූරය ලෝඩ් කිරීම
+                            if (product.getProductImage() != null && !product.getProductImage().isEmpty()) {
+                                Glide.with(holder.itemView.getContext())
+                                        .load(product.getProductImage().get(0))
+                                        .into(holder.foodImage);
+                            }
+
+                            holder.itemView.setOnClickListener(view -> {
+                            });
+                        }
+                    }
+                });
+
+
+
     }
 
     @Override
     public int getItemCount() {
-        return products.size();
+        return cartItems.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView foodImage;
         TextView foodTitle;
-        TextView foodRating;
+        TextView foodPortion;
         TextView foodPrice;
-        TextView foodTime;
-        TextView foodDetail;
-        ImageView availability;
+        TextView foodQty;
+
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            foodImage = itemView.findViewById(R.id.foodImage);
-            foodTitle = itemView.findViewById(R.id.foodTitle);
-            foodRating = itemView.findViewById(R.id.foodRating);
-            foodPrice = itemView.findViewById(R.id.foodPrice);
-            foodTime = itemView.findViewById(R.id.foodTime);
-            foodDetail = itemView.findViewById(R.id.foodCalories);
-            availability = itemView.findViewById(R.id.avlb);
+            foodImage = itemView.findViewById(R.id.imgCartItem);
+            foodTitle = itemView.findViewById(R.id.txtCartItemTitle);
+            foodPortion = itemView.findViewById(R.id.txtCartItemPortion);
+            foodPrice = itemView.findViewById(R.id.txtCartItemPrice);
+            foodQty = itemView.findViewById(R.id.txtCartQty);
+
 
         }
     }

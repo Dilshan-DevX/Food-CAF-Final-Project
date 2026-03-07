@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="20dp"
-    android:layout_marginTop="8dp"
+    android:layout_marginHorizontal="10dp"
+    android:layout_marginTop="0dp"
     android:layout_marginBottom="8dp"
     app:cardBackgroundColor="@color/md_theme_itemPop"
     app:cardCornerRadius="20dp"
@@ -52,7 +52,7 @@
             tools:text="Spicy Cheesy Hot Dog" />
 
         <TextView
-            android:id="@+id/txtCartItemDesc"
+            android:id="@+id/txtCartItemPortion"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
@@ -63,7 +63,7 @@
             app:layout_constraintEnd_toEndOf="@id/txtCartItemTitle"
             app:layout_constraintStart_toStartOf="@id/txtCartItemTitle"
             app:layout_constraintTop_toBottomOf="@id/txtCartItemTitle"
-            tools:text="Spicy cheesy grilled perfection in every bite!" />
+            tools:text="Full" />
 
         <TextView
             android:id="@+id/txtCartItemPrice"
