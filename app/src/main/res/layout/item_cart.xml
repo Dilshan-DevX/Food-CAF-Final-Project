@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="20dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="8dp"
+    app:cardBackgroundColor="@color/md_theme_itemPop"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="2dp"
+    app:strokeWidth="0dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/imgCartItemContainer"
+            android:layout_width="85dp"
+            android:layout_height="85dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/imgCartItem"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                tools:srcCompat="@tools:sample/backgrounds/scenic" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:id="@+id/txtCartItemTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/md_theme_Text2"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/imgCartItemContainer"
+            app:layout_constraintTop_toTopOf="@id/imgCartItemContainer"
+            tools:text="Spicy Cheesy Hot Dog" />
+
+        <TextView
+            android:id="@+id/txtCartItemDesc"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textColor="#888888"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toEndOf="@id/txtCartItemTitle"
+            app:layout_constraintStart_toStartOf="@id/txtCartItemTitle"
+            app:layout_constraintTop_toBottomOf="@id/txtCartItemTitle"
+            tools:text="Spicy cheesy grilled perfection in every bite!" />
+
+        <TextView
+            android:id="@+id/txtCartItemPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/md_theme_Text2"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/imgCartItemContainer"
+            app:layout_constraintStart_toStartOf="@id/txtCartItemTitle"
+            tools:text="$5.99" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="@id/imgCartItemContainer"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <ImageView
+                android:id="@+id/btnCartMinus"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:background="@drawable/circle_bg"
+                android:padding="6dp"
+                android:src="@android:drawable/ic_menu_delete"
+                app:tint="#888888" />
+
+            <TextView
+                android:id="@+id/txtCartQty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                android:text="01"
+                android:textColor="@color/md_theme_Text2"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/btnCartPlus"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:background="@drawable/circle_bg_filled"
+                android:backgroundTint="#000000"
+                android:padding="6dp"
+                android:src="@android:drawable/ic_input_add"
+                app:tint="#FFFFFF" />
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

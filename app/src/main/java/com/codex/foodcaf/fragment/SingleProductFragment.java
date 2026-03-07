@@ -1,5 +1,6 @@
 package com.codex.foodcaf.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
@@ -16,12 +17,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codex.foodcaf.R;
+import com.codex.foodcaf.activity.MainActivity;
+import com.codex.foodcaf.activity.SigninActivity;
 import com.codex.foodcaf.adapter.PopularSectionAdapter;
 import com.codex.foodcaf.adapter.ProductSliderAdapter;
 import com.codex.foodcaf.databinding.FragmentSingleProductBinding;
 import com.codex.foodcaf.model.CartItem;
 import com.codex.foodcaf.model.Product;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -175,29 +179,52 @@ public class SingleProductFragment extends Fragment {
                                     cartItem.setProductId(productId);
                                     cartItem.setProductName(product.getFoodTitle());
                                     cartItem.setProductPrice(basePrice * quantity);
+                                    cartItem.setUnitPrice(basePrice);
+                                    cartItem.setQty(quantity);
                                     cartItem.setAttributes(finalAttributes);
 
-                                    // 🔴 Log එකේ පෙන්නන්න Portion විස්තර ටික එකතු කරගන්නවා 🔴
+
                                     StringBuilder portions = new StringBuilder();
                                     for (CartItem.Attribute attr : finalAttributes) {
                                         if (attr.getValues() != null && !attr.getValues().isEmpty()) {
-                                            portions.append(attr.getPorsion()).append(": ").append(attr.getValues().get(0)).append(" | ");
+                                            portions.append(attr.getValues().get(0)).append(" | ");
                                         }
                                     }
 
-                                    // 🔴 Logcat එකේ පෙන්නන මැසේජ් එක 🔴
+                                    // Logcat
                                     String logMessage = "Name: " + product.getFoodTitle() +
                                             " | Qty: " + quantity +
                                             " | Portion: [" + portions.toString() + "]" +
                                             " | Total Price: LKR " + (basePrice * quantity);
 
-                                    // "CART_TEST" කියන නමින් Logcat එකට යවනවා
+                                    // "CART_TEST"
                                     android.util.Log.d("CART_TEST", logMessage);
 
-                                    // 3. Test කරන්න Toast එකක් දානවා
-                                    Toast.makeText(getContext(), "Added! Check Logcat (CART_TEST)", Toast.LENGTH_SHORT).show();
+                                    // 3. Test Toast
+//                                    Toast.makeText(getContext(), "Added! Check Logcat (CART_TEST)", Toast.LENGTH_SHORT).show();
 
-                                    // මෙතනින් ඔයාගේ Cart Database එකට Save කරන කෝඩ් එක ලියන්න පුළුවන්
+                                    //  Cart Database  Save
+
+                                    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+                                    if (firebaseAuth.getCurrentUser() == null){
+                                        Intent intent = new Intent(getActivity(),SigninActivity.class);
+                                        startActivity(intent);
+                                    }else {
+                                        String uid = firebaseAuth.getCurrentUser().getUid();
+
+                                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+                                        db.collection("users").document(uid).collection("cart")
+                                                .document()
+                                                .set(cartItem)
+                                                .addOnSuccessListener(documentReference -> {
+                                                    Toast.makeText(getContext(), "Successfully added to Cart!", Toast.LENGTH_SHORT).show();
+                                                })
+                                                .addOnFailureListener(e -> {
+                                                    Toast.makeText(getContext(), "Failed to add to Cart: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                });
+                                    }
+
+
                                 }
                             });
 
@@ -242,6 +269,7 @@ public class SingleProductFragment extends Fragment {
     }
 
     // 🔴 Attribute Render කරන මෙතඩ් එක 🔴
+
     private void reanderAttribute(Product.Attribute attribute, ViewGroup container) {
         if (attribute == null || attribute.getValues() == null || attribute.getValues().isEmpty()) {
             return;
@@ -320,8 +348,6 @@ public class SingleProductFragment extends Fragment {
 
                 // 🟢 Map එකට සේව් කිරීම (Default Selection)
                 CartItem.Attribute cartAttr = new CartItem.Attribute();
-                cartAttr.setPorsion(attribute.getPorsion());
-                cartAttr.setType(attribute.getType());
                 cartAttr.setValues(Collections.singletonList(optionName));
                 cartAttr.setPrice(Collections.singletonList(String.valueOf(optionPrice)));
 
@@ -340,8 +366,6 @@ public class SingleProductFragment extends Fragment {
 
                     // 🟢 Map එක අලුත් අගයන්ගෙන් යාවත්කාලීන කිරීම
                     CartItem.Attribute cartAttr = new CartItem.Attribute();
-                    cartAttr.setPorsion(attribute.getPorsion());
-                    cartAttr.setType(attribute.getType());
                     cartAttr.setValues(Collections.singletonList(selectedButton.getText().toString()));
                     cartAttr.setPrice(Collections.singletonList(String.valueOf(newPrice)));
 
