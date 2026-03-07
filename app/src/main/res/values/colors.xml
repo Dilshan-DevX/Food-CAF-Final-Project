@@ -20,6 +20,8 @@
 
     <color name="md_theme_itemCard_bg">#FFFFFF</color>
 
+    <color name="md_theme_itemCart_bg">#E7E4E4</color>
+
     <color name="md_theme_dotind">#BFC9D1</color>
 
     <color name="md_theme_onPrimary">#FFFFFF</color>
