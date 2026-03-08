@@ -27,9 +27,6 @@ public class CartItem {
     @Builder
     public static class Attribute {
 
-//        private String porsion;
-//        private String type;
-
         private List<String> values;
         private List<String> Price;
     }
