@@ -6,8 +6,8 @@
         android:title="@string/home_string_bottom_nav_menu"/>
 
     <item android:id="@+id/bottom_nav_search"
-        android:icon="@drawable/search_24px"
-        android:title="@string/search_string_bottom_nav_menu"/>
+        android:icon="@drawable/format_list_bulleted_24px"
+        android:title="Category"/>
 
     <item android:id="@+id/bottom_order"
         android:icon="@drawable/shopping_bag_speed_24px"

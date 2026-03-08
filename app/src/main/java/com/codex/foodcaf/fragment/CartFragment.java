@@ -32,7 +32,7 @@ public class CartFragment extends Fragment {
     private List<CartItem> cartItemList;
 
     // Delivery ගාස්තුව (ඔයාට ඕන ගාණක් මෙතන දෙන්න පුළුවන්)
-    private final double DELIVERY_FEE = 1.75;
+    private final double DELIVERY_FEE = 100.00;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
