@@ -214,7 +214,7 @@ public class SingleProductFragment extends Fragment {
 
                                         FirebaseFirestore db = FirebaseFirestore.getInstance();
                                         db.collection("users").document(uid).collection("cart")
-                                                .document()
+                                                .document(productId)
                                                 .set(cartItem)
                                                 .addOnSuccessListener(documentReference -> {
                                                     Toast.makeText(getContext(), "Successfully added to Cart!", Toast.LENGTH_SHORT).show();
