@@ -90,7 +90,7 @@
                 android:id="@+id/txtSubTotal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="$22.04"
+                android:text="LKR 00.00"
                 android:textColor="@color/md_theme_Text2"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -114,7 +114,7 @@
                 android:id="@+id/txtDeliveryFee"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="$1.75"
+                android:text="LKR 00.00"
                 android:textColor="@color/md_theme_Text2"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -139,7 +139,7 @@
                 android:id="@+id/txtTotalCost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="$23.79"
+                android:text="LKR 00.00"
                 android:textColor="@color/md_theme_Text2"
                 android:textSize="20sp"
                 android:textStyle="bold" />

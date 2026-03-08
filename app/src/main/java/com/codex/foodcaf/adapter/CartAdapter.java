@@ -1,5 +1,7 @@
 package com.codex.foodcaf.adapter;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,9 +24,10 @@ import java.util.List;
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
     private List<CartItem> cartItems;
-    private OnListingItemClickListener listener;
+    private CartItemInteractionListener listener;
 
-    public CartAdapter(List<CartItem> cartItems, OnListingItemClickListener listener) {
+    // 🔴 Interface එකේ නම වෙනස් කළා Cart එකට ගැළපෙන්න
+    public CartAdapter(List<CartItem> cartItems, CartItemInteractionListener listener) {
         this.cartItems = cartItems;
         this.listener = listener;
     }
@@ -32,8 +35,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     @NonNull
     @Override
     public CartAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-       View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_cart,parent,false);
-
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_cart, parent, false);
         return new ViewHolder(view);
     }
 
@@ -41,12 +43,13 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull CartAdapter.ViewHolder holder, int position) {
         CartItem cartItem = cartItems.get(position);
 
+        // Unit Price එක ගන්නවා
         double unitPrice = cartItem.getUnitPrice();
 
-        holder.foodPrice.setText("LKR" + cartItem.getProductPrice());
+        holder.foodPrice.setText("LKR " + cartItem.getProductPrice());
         holder.foodQty.setText(String.format("%02d", cartItem.getQty()));
 
-
+        // Portion එක ගන්නවා
         if (cartItem.getAttributes() != null && !cartItem.getAttributes().isEmpty()) {
             String selectedPortion = cartItem.getAttributes().get(0).getValues().get(0);
             holder.foodPortion.setText(selectedPortion);
@@ -54,7 +57,69 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             holder.foodPortion.setText("Regular");
         }
 
+        // 🟢 Plus (+) Button Click Logic 🟢
+        holder.btnCartPlus.setOnClickListener(v -> {
+            int pos = holder.getAdapterPosition(); // අලුත් position එක ගන්නවා
+            if(pos != RecyclerView.NO_POSITION) {
+                int currentQty = cartItem.getQty();
+                currentQty++; // ප්‍රමාණය 1කින් වැඩි කරනවා
 
+                cartItem.setQty(currentQty);
+                cartItem.setProductPrice(currentQty * unitPrice); // අලුත් මිල හදනවා (Qty * UnitPrice)
+
+                // UI එක Update කරනවා
+                holder.foodQty.setText(String.format("%02d", currentQty));
+                holder.foodPrice.setText("LKR " + cartItem.getProductPrice());
+
+                // Firebase Update කරන්න Fragment එකට මැසේජ් එක යවනවා
+                if(listener != null){
+                    listener.onQuantityUpdated(cartItem);
+                }
+            }
+        });
+
+        // 🔴 Minus (-) Button Click Logic 🔴
+        holder.btnCartMinus.setOnClickListener(v -> {
+            int pos = holder.getAdapterPosition();
+            if(pos != RecyclerView.NO_POSITION) {
+                // හරියටම ක්ලික් කරපු අයිටම් එක ගන්නවා
+                CartItem currentItem = cartItems.get(pos);
+                int currentQty = currentItem.getQty();
+
+                if (currentQty > 1) {
+                    currentQty--;
+                    currentItem.setQty(currentQty);
+                    currentItem.setProductPrice(currentQty * unitPrice);
+
+                    holder.foodQty.setText(String.format("%02d", currentQty));
+                    holder.foodPrice.setText("LKR " + currentItem.getProductPrice());
+
+                    if(listener != null){
+                        listener.onQuantityUpdated(currentItem);
+                    }
+                } else {
+                    new AlertDialog.Builder(holder.itemView.getContext())
+                            .setTitle("Remove Item")
+                            .setMessage("Are you sure you want to remove this item from the cart?")
+                            .setPositiveButton("Yes", (dialog, which) -> {
+
+                                // 1. මුලින්ම Firebase එකෙන් මකන්න Fragment එකට යවනවා
+                                if(listener != null){
+                                    listener.onItemRemoved(currentItem);
+                                }
+
+                                // 2. ඊට පස්සේ ඇප් එකේ පේන ලිස්ට් එකෙන් අයින් කරනවා
+                                cartItems.remove(pos);
+                                notifyItemRemoved(pos);
+                                notifyItemRangeChanged(pos, cartItems.size());
+                            })
+                            .setNegativeButton("No", (dialog, which) -> dialog.dismiss())
+                            .show();
+                }
+            }
+        });
+
+        // ඩේටාබේස් එකෙන් විස්තර ගන්න කලින් ලියපු කෝඩ් එක (Image, Title ආදිය)
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("products")
                 .whereEqualTo("productId", cartItem.getProductId())
@@ -65,10 +130,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                         if (!qd.isEmpty()) {
                             Product product = qd.getDocuments().get(0).toObject(Product.class);
 
-                            // Title එක සෙට් කිරීම
                             holder.foodTitle.setText(product.getFoodTitle());
 
-                            // පින්තූරය ලෝඩ් කිරීම
                             if (product.getProductImage() != null && !product.getProductImage().isEmpty()) {
                                 Glide.with(holder.itemView.getContext())
                                         .load(product.getProductImage().get(0))
@@ -76,13 +139,13 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                             }
 
                             holder.itemView.setOnClickListener(view -> {
+                                if(listener != null) {
+                                    listener.onItemClick(product);
+                                }
                             });
                         }
                     }
                 });
-
-
-
     }
 
     @Override
@@ -98,6 +161,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         TextView foodPrice;
         TextView foodQty;
 
+        // 🔴 අලුත් බොත්තම් දෙක
+        ImageView btnCartPlus;
+        ImageView btnCartMinus;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -107,12 +173,16 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             foodPrice = itemView.findViewById(R.id.txtCartItemPrice);
             foodQty = itemView.findViewById(R.id.txtCartQty);
 
-
+            // බොත්තම් දෙක ෆයින්ඩ් කරනවා
+            btnCartPlus = itemView.findViewById(R.id.btnCartPlus);
+            btnCartMinus = itemView.findViewById(R.id.btnCartMinus);
         }
     }
 
-    public interface OnListingItemClickListener {
-        void onListingItemClick(Product product);
+    // 🔴 ප්‍රධාන Fragment එකට ඩේටා යවන අලුත් Interface එක
+    public interface CartItemInteractionListener {
+        void onQuantityUpdated(CartItem cartItem); // Qty එක වෙනස් වුණාම
+        void onItemRemoved(CartItem cartItem);     // Item එක Delete කළාම
+        void onItemClick(Product product);         // Item එක Click කළාම
     }
-
 }
