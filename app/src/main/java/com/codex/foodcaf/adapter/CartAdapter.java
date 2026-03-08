@@ -46,7 +46,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         // Unit Price එක ගන්නවා
         double unitPrice = cartItem.getUnitPrice();
 
-        holder.foodPrice.setText("LKR " + cartItem.getProductPrice());
+        holder.foodPrice.setText(String.format("LKR %.2f", cartItem.getProductPrice()));
         holder.foodQty.setText(String.format("%02d", cartItem.getQty()));
 
         // Portion එක ගන්නවා
@@ -69,7 +69,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
                 // UI එක Update කරනවා
                 holder.foodQty.setText(String.format("%02d", currentQty));
-                holder.foodPrice.setText("LKR " + cartItem.getProductPrice());
+//                holder.foodPrice.setText("LKR " + cartItem.getProductPrice());
+                holder.foodPrice.setText(String.format("LKR %.2f", cartItem.getProductPrice()));
 
                 // Firebase Update කරන්න Fragment එකට මැසේජ් එක යවනවා
                 if(listener != null){
@@ -77,6 +78,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 }
             }
         });
+
 
         // 🔴 Minus (-) Button Click Logic 🔴
         holder.btnCartMinus.setOnClickListener(v -> {

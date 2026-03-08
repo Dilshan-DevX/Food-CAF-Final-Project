@@ -61,18 +61,30 @@ public class CartFragment extends Fragment {
                                 LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
                                 binding.cartRecyclerView.setLayoutManager(layoutManager);
 
-                                // 🔴 Lambda වෙනුවට Methods 3ම Override කරන විදිය 🔴
+
                                 adapter = new CartAdapter(cartItemList, new CartAdapter.CartItemInteractionListener() {
 
                                     @Override
                                     public void onQuantityUpdated(CartItem cartItem) {
-                                        // Quantity වැඩි/අඩු කළාම Firebase එක Update කරනවා
+                                        // Product ID eka null da kiyala check karanawa
+                                        if (cartItem.getProductId() == null || cartItem.getProductId().isEmpty()) {
+                                            return;
+                                        }
+
+                                        // Firebase database eke qty ekayi price ekayi update karanawa
                                         db.collection("users").document(uid).collection("cart")
                                                 .document(cartItem.getProductId())
-                                                .set(cartItem);
-
-                                        // බිල් එක අලුතෙන් හදනවා
-                                        calculateTotal();
+                                                .update(
+                                                        "qty", cartItem.getQty(),
+                                                        "productPrice", cartItem.getProductPrice()
+                                                )
+                                                .addOnSuccessListener(aVoid -> {
+                                                    // Database eka update unata passe yatin thiyena total bill eka hadanawa
+                                                    calculateTotal();
+                                                })
+                                                .addOnFailureListener(e -> {
+                                                    Toast.makeText(getContext(), "Failed to update quantity: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                });
                                     }
 
                                     @Override
