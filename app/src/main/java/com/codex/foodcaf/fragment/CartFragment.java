@@ -18,6 +18,7 @@ import com.codex.foodcaf.databinding.FragmentCartBinding;
 import com.codex.foodcaf.model.CartItem;
 import com.codex.foodcaf.model.Product;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -133,6 +134,24 @@ public class CartFragment extends Fragment {
                         }
                     });
         }
+
+        binding.btnCheckout.setOnClickListener(view1 -> {
+            CheckOutFragment checkOutFragment = new CheckOutFragment();
+            getParentFragmentManager().beginTransaction()
+                    .replace(R.id.fragmentContainer, checkOutFragment)
+                    .addToBackStack(null).commit();
+        });
+
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new androidx.activity.OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                requireActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragmentContainer, new HomeFragment())
+                        .commit();
+                 BottomNavigationView bottomNav = getActivity().findViewById(R.id.bottomNavView);
+                 bottomNav.setSelectedItemId(R.id.bottom_nav_home);
+            }
+        });
     }
 
     // 🔴 මුළු බිල (Sub-Total, Total Cost) හදන මෙතඩ් එක 🔴
@@ -157,4 +176,19 @@ public class CartFragment extends Fragment {
         binding.txtDeliveryFee.setText(String.format("LKR %.2f", DELIVERY_FEE));
         binding.txtTotalCost.setText(String.format("LKR %.2f", totalCost));
     }
+
+
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        getActivity().findViewById(R.id.bottomNavView).setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getActivity().findViewById(R.id.bottomNavView).setVisibility(View.GONE);
+    }
+
 }
