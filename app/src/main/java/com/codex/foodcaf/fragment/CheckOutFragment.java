@@ -393,7 +393,7 @@ public class CheckOutFragment extends Fragment {
                                     db.collection("orders").document(order.getOrderId())
                                             .set(order)
                                             .addOnSuccessListener( aVoid->{
-                                                Toast.makeText(getContext(), "Order Saved Successfully", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(getContext(), "Order placed Successfully", Toast.LENGTH_SHORT).show();
 
                                                 WriteBatch batch = db.batch();
 
@@ -401,7 +401,6 @@ public class CheckOutFragment extends Fragment {
                                                     batch.delete(document.getReference());
                                                 }
                                                 batch.commit().addOnSuccessListener(aVoid1 -> {
-                                                    Toast.makeText(getContext(), "Cart Cleared!", Toast.LENGTH_SHORT).show();
                                                     requireActivity().getSupportFragmentManager().popBackStack();
 
                                                 }).addOnFailureListener(e -> {

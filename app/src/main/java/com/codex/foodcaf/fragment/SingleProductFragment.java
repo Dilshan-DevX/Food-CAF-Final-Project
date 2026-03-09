@@ -146,26 +146,6 @@ public class SingleProductFragment extends Fragment {
                                 });
                             }
 
-                            // 🟢 "Add to Cart" Button Logic එක 🟢
-//                            binding.btnAddToCart.setOnClickListener(v -> {
-//                                if(product.isAvailability()) {
-//                                    // 1. Map එකේ තියෙන attributes ටික List එකකට හරවනවා
-//                                    List<CartItem.Attribute> finalAttributes = new ArrayList<>(selectedAttributesMap.values());
-//
-//                                    // 2. CartItem ඔබ්ජෙක්ට් එක හදලා දත්ත ටික සෙට් කරනවා
-//                                    CartItem cartItem = new CartItem();
-//                                    cartItem.setProductId(productId);
-//                                    cartItem.setProductName(product.getFoodTitle());
-//                                    // Quantity එකත් එක්ක ගුණ වුණු මුළු ගාණ හරි, එකක ගාණ හරි දෙන්න පුළුවන්
-//                                    cartItem.setProductPrice(basePrice * quantity);
-//                                    cartItem.setAttributes(finalAttributes);
-//
-//                                    // 3. Test කරන්න Toast එකක් දානවා (ඔයාට මේක පස්සේ DB එකට Save කරන්න පුළුවන්)
-//                                    Toast.makeText(getContext(), "Added to Cart! Total: " + (basePrice * quantity), Toast.LENGTH_SHORT).show();
-//
-//                                    // 🔴 මෙතනින් ඔයාගේ Cart Database එකට Save කරන කෝඩ් එක ලියන්න 🔴
-//                                }
-//                            });
 
                             /// //////////////////////"Add to Cart" Button Logic/////////////////////////////
 
@@ -183,6 +163,11 @@ public class SingleProductFragment extends Fragment {
                                     cartItem.setQty(quantity);
                                     cartItem.setAttributes(finalAttributes);
 
+                                    String selectedPortion = "Regular";
+                                    if (!finalAttributes.isEmpty() && finalAttributes.get(0).getValues() != null && !finalAttributes.get(0).getValues().isEmpty()) {
+                                        selectedPortion = finalAttributes.get(0).getValues().get(0);
+                                    }
+                                    String docId = productId + "_" + selectedPortion;
 
                                     StringBuilder portions = new StringBuilder();
                                     for (CartItem.Attribute attr : finalAttributes) {
@@ -214,7 +199,7 @@ public class SingleProductFragment extends Fragment {
 
                                         FirebaseFirestore db = FirebaseFirestore.getInstance();
                                         db.collection("users").document(uid).collection("cart")
-                                                .document(productId)
+                                                .document(docId)
                                                 .set(cartItem)
                                                 .addOnSuccessListener(documentReference -> {
                                                     Toast.makeText(getContext(), "Successfully added to Cart!", Toast.LENGTH_SHORT).show();
