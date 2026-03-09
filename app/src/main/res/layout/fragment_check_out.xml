@@ -350,48 +350,48 @@
                         android:layout_marginStart="36dp"
                         android:orientation="vertical">
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="8dp">
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_marginBottom="8dp">-->
 
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="1 x Cheese Burger"
-                                android:textColor="@color/md_theme_Text2"
-                                android:textSize="14sp" />
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="LKR 00.00"
-                                android:textColor="@color/md_theme_Text2"
-                                android:textSize="14sp"
-                                android:textStyle="bold" />
+<!--                            <TextView-->
+<!--                                android:layout_width="0dp"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_weight="1"-->
+<!--                                android:text="1 x Cheese Burger"-->
+<!--                                android:textColor="@color/md_theme_Text2"-->
+<!--                                android:textSize="14sp" />-->
+<!--                            <TextView-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:text="LKR 00.00"-->
+<!--                                android:textColor="@color/md_theme_Text2"-->
+<!--                                android:textSize="14sp"-->
+<!--                                android:textStyle="bold" />-->
 
 
-                        </LinearLayout>
+<!--                        </LinearLayout>-->
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="12dp">
-                            <TextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="1 x French fries with honey sauce"
-                                android:textColor="@color/md_theme_Text2"
-                                android:textSize="14sp" />
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="LKR 00.00"
-                                android:textColor="@color/md_theme_Text2"
-                                android:textSize="14sp"
-                                android:textStyle="bold" />
-                        </LinearLayout>
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_marginBottom="12dp">-->
+<!--                            <TextView-->
+<!--                                android:layout_width="0dp"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_weight="1"-->
+<!--                                android:text="1 x French fries with honey sauce"-->
+<!--                                android:textColor="@color/md_theme_Text2"-->
+<!--                                android:textSize="14sp" />-->
+<!--                            <TextView-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:text="LKR 00.00"-->
+<!--                                android:textColor="@color/md_theme_Text2"-->
+<!--                                android:textSize="14sp"-->
+<!--                                android:textStyle="bold" />-->
+<!--                        </LinearLayout>-->
                     </LinearLayout>
 
                     <View
@@ -467,7 +467,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="Total"
-                            android:textColor="#222222"
+                            android:textColor="@color/md_theme_Text2"
                             android:textSize="16sp"
                             android:textStyle="bold" />
                         <TextView
@@ -475,7 +475,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="LKR 00.00"
-                            android:textColor="#222222"
+                            android:textColor="@color/md_theme_Text2"
                             android:textSize="16sp"
                             android:textStyle="bold" />
                     </LinearLayout>

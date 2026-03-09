@@ -80,7 +80,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         });
 
 
-        // 🔴 Minus (-) Button Click Logic 🔴
+        // Minus (-) Button Click Logic
         holder.btnCartMinus.setOnClickListener(v -> {
             int pos = holder.getAdapterPosition();
             if(pos != RecyclerView.NO_POSITION) {
@@ -121,7 +121,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             }
         });
 
-        // ඩේටාබේස් එකෙන් විස්තර ගන්න කලින් ලියපු කෝඩ් එක (Image, Title ආදිය)
+
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("products")
                 .whereEqualTo("productId", cartItem.getProductId())
@@ -163,7 +163,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         TextView foodPrice;
         TextView foodQty;
 
-        // 🔴 අලුත් බොත්තම් දෙක
+
         ImageView btnCartPlus;
         ImageView btnCartMinus;
 
@@ -175,13 +175,11 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             foodPrice = itemView.findViewById(R.id.txtCartItemPrice);
             foodQty = itemView.findViewById(R.id.txtCartQty);
 
-            // බොත්තම් දෙක ෆයින්ඩ් කරනවා
             btnCartPlus = itemView.findViewById(R.id.btnCartPlus);
             btnCartMinus = itemView.findViewById(R.id.btnCartMinus);
         }
     }
 
-    // 🔴 ප්‍රධාන Fragment එකට ඩේටා යවන අලුත් Interface එක
     public interface CartItemInteractionListener {
         void onQuantityUpdated(CartItem cartItem); // Qty එක වෙනස් වුණාම
         void onItemRemoved(CartItem cartItem);     // Item එක Delete කළාම
