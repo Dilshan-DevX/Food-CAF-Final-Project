@@ -401,7 +401,9 @@ public class CheckOutFragment extends Fragment {
                                                     batch.delete(document.getReference());
                                                 }
                                                 batch.commit().addOnSuccessListener(aVoid1 -> {
-                                                    requireActivity().getSupportFragmentManager().popBackStack();
+                                                    requireActivity().getSupportFragmentManager().beginTransaction()
+                                                            .replace(R.id.fragmentContainer, new OrderCompleteFragment())
+                                                            .commit();
 
                                                 }).addOnFailureListener(e -> {
                                                     Toast.makeText(getContext(), "Failed to clear cart: " + e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -655,8 +657,9 @@ public class CheckOutFragment extends Fragment {
                                                 batch.delete(document.getReference());
                                             }
                                             batch.commit().addOnSuccessListener(aVoid1 -> {
-                                                Toast.makeText(getContext(), "Cart Cleared!", Toast.LENGTH_SHORT).show();
-                                                requireActivity().getSupportFragmentManager().popBackStack();
+                                                requireActivity().getSupportFragmentManager().beginTransaction()
+                                                        .replace(R.id.fragmentContainer, new OrderCompleteFragment())
+                                                        .commit();
 
                                             }).addOnFailureListener(e -> {
                                                 Toast.makeText(getContext(), "Failed to clear cart: " + e.getMessage(), Toast.LENGTH_SHORT).show();
