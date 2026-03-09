@@ -136,10 +136,14 @@ public class CartFragment extends Fragment {
         }
 
         binding.btnCheckout.setOnClickListener(view1 -> {
-            CheckOutFragment checkOutFragment = new CheckOutFragment();
-            getParentFragmentManager().beginTransaction()
-                    .replace(R.id.fragmentContainer, checkOutFragment)
-                    .addToBackStack(null).commit();
+                    if (cartItemList == null || cartItemList.isEmpty()) {
+                        Toast.makeText(getContext(), "Please add items to your cart before checking out.", Toast.LENGTH_SHORT).show();
+                    } else {
+                        CheckOutFragment checkOutFragment = new CheckOutFragment();
+                        getParentFragmentManager().beginTransaction()
+                                .replace(R.id.fragmentContainer, checkOutFragment)
+                                .addToBackStack(null).commit();
+                    }
         });
 
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new androidx.activity.OnBackPressedCallback(true) {

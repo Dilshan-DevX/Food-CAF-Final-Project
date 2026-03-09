@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class Order {
     private String orderId;
     private String userId;
-    private long orderDate;
+    private String orderDate;
     private String status;
     private List<OrderItem> orderItems;
     private Address DeliveryAddress;
