@@ -401,8 +401,13 @@ public class CheckOutFragment extends Fragment {
                                                     batch.delete(document.getReference());
                                                 }
                                                 batch.commit().addOnSuccessListener(aVoid1 -> {
+                                                    OrderCompleteFragment fragment = new OrderCompleteFragment();
+                                                    Bundle bundle = new Bundle();
+                                                    bundle.putString("ORDER_ID", order.getOrderId()); // අලුත් Order ID එක මෙතනින් යවනවා
+                                                    fragment.setArguments(bundle);
+
                                                     requireActivity().getSupportFragmentManager().beginTransaction()
-                                                            .replace(R.id.fragmentContainer, new OrderCompleteFragment())
+                                                            .replace(R.id.fragmentContainer, fragment)
                                                             .commit();
 
                                                 }).addOnFailureListener(e -> {
@@ -657,8 +662,13 @@ public class CheckOutFragment extends Fragment {
                                                 batch.delete(document.getReference());
                                             }
                                             batch.commit().addOnSuccessListener(aVoid1 -> {
+                                                OrderCompleteFragment fragment = new OrderCompleteFragment();
+                                                Bundle bundle = new Bundle();
+                                                bundle.putString("ORDER_ID", order.getOrderId()); // අලුත් Order ID එක මෙතනින් යවනවා
+                                                fragment.setArguments(bundle);
+
                                                 requireActivity().getSupportFragmentManager().beginTransaction()
-                                                        .replace(R.id.fragmentContainer, new OrderCompleteFragment())
+                                                        .replace(R.id.fragmentContainer, fragment)
                                                         .commit();
 
                                             }).addOnFailureListener(e -> {
