@@ -42,7 +42,7 @@ public class CatListAdapter extends RecyclerView.Adapter<CatListAdapter.ViewHold
         holder.foodRating.setText(product.getFoodRating());
         holder.foodTime.setText(product.getFoodTime());
         holder.foodDetail.setText(product.getIngrideint());
-        holder.foodPrice.setText("Rs "+product.getProductPrice());
+        holder.foodPrice.setText("Rs "+product.getProductPrice()+"0");
         holder.foodTime.setText(product.getFoodTime());
         if (product.isAvailability()) {
             holder.availability.setColorFilter(android.graphics.Color.parseColor("#52C85A"));

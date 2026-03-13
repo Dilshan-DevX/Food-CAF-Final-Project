@@ -60,4 +60,8 @@ dependencies {
     implementation 'com.github.PayHereDevs:payhere-android-sdk:v3.0.18'
     implementation 'com.google.code.gson:gson:2.8.0'
 
+    /////fireStorages
+
+    implementation("com.google.firebase:firebase-storage")
+
 }
