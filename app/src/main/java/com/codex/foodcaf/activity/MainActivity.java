@@ -147,31 +147,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
 
         if (currentUser != null) {
-//            firebaseFirestore.collection("users").document(currentUser.getUid()).get()
-//                    .addOnSuccessListener(documentSnapshot -> {
-//
-//                        if (documentSnapshot.exists()){
-//
-//                            User user = documentSnapshot.toObject(User.class);
-//                            sideNavHeaderBinding.headerUserName.setText(user.getName());
-//                            sideNavHeaderBinding.headerUserEmail.setText(user.getEmail());
-//
-//                            Glide.with(MainActivity.this)
-//                                    .load(user.getProfilePicUrl())
-//                                    .circleCrop()
-//                                    .into(sideNavHeaderBinding.HeaderPic);
-//                        }else {
-//                            Log.e("FireStore","Document does not exist");
-//                        }
-//                    }).addOnFailureListener(e -> {
-//                        Log.e("FireStore","Error"+e.getMessage());
-//                    });
 
-///
 
-            firebaseFirestore.collection("users").document(currentUser.getUid()).get()
-                    .addOnSuccessListener(documentSnapshot -> {
-                        if (documentSnapshot.exists()) {
+
+            firebaseFirestore.collection("users").document(currentUser.getUid())
+                    .addSnapshotListener((documentSnapshot, e) -> {
+                        if (e != null) {
+                            Toast.makeText(MainActivity.this, "Failed to listen for profile updates", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
+                        if (documentSnapshot != null && documentSnapshot.exists()) {
                             User user = documentSnapshot.toObject(User.class);
                             if (user != null) {
 
@@ -181,27 +167,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                 String profilePicUrl = user.getProfilePicUrl();
 
                                 if (profilePicUrl != null && !profilePicUrl.isEmpty()) {
-
                                     Log.d("ProfilePicUrl", profilePicUrl);
 
-                                    Glide.with(MainActivity.this)
-                                            .load(profilePicUrl)
-                                            .circleCrop()
-                                            .placeholder(R.drawable.man)
-                                            .error(R.drawable.man)
-                                            .into(sideNavHeaderBinding.HeaderPic);
+                                    // Profile Activity ane App crash thavathi bachavva check karo
+                                    if (!isDestroyed()) {
+                                        Glide.with(MainActivity.this)
+                                                .load(profilePicUrl)
+                                                .circleCrop()
+                                                .placeholder(R.drawable.man)
+                                                .error(R.drawable.man)
+                                                .into(sideNavHeaderBinding.HeaderPic);
+                                    }
 
                                 } else {
-
                                     sideNavHeaderBinding.HeaderPic.setImageResource(R.drawable.man);
-
                                 }
                             }
                         }
-                    })
-                    .addOnFailureListener(e -> {
-                        Toast.makeText(MainActivity.this, "Failed to load profile data", Toast.LENGTH_SHORT).show();
                     });
+
+
             navigationView.getMenu().findItem(R.id.side_nav_login).setVisible(false);
 
             navigationView.getMenu().findItem(R.id.side_nav_cart).setVisible(true);
