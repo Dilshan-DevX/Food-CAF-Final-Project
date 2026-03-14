@@ -137,9 +137,7 @@ public class ProfileFragment extends Fragment {
                 if (firebaseAuth != null) {
                     firebaseAuth.signOut();
                 }
-                requireActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragmentContainer, new HomeFragment())
-                        .commit();
+
                 com.google.android.material.bottomnavigation.BottomNavigationView bottomNavView = requireActivity().findViewById(R.id.bottomNavView);
                 if (bottomNavView != null) {
                     bottomNavView.setSelectedItemId(R.id.bottom_nav_home);

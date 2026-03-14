@@ -43,13 +43,13 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull CartAdapter.ViewHolder holder, int position) {
         CartItem cartItem = cartItems.get(position);
 
-        // Unit Price එක ගන්නවා
+
         double unitPrice = cartItem.getUnitPrice();
 
         holder.foodPrice.setText(String.format("LKR %.2f", cartItem.getProductPrice()));
         holder.foodQty.setText(String.format("%02d", cartItem.getQty()));
 
-        // Portion එක ගන්නවා
+
         if (cartItem.getAttributes() != null && !cartItem.getAttributes().isEmpty()) {
             String selectedPortion = cartItem.getAttributes().get(0).getValues().get(0);
             holder.foodPortion.setText(selectedPortion);
@@ -57,22 +57,21 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             holder.foodPortion.setText("Regular");
         }
 
-        // 🟢 Plus (+) Button Click Logic 🟢
+
         holder.btnCartPlus.setOnClickListener(v -> {
-            int pos = holder.getAdapterPosition(); // අලුත් position එක ගන්නවා
+            int pos = holder.getAdapterPosition();
             if(pos != RecyclerView.NO_POSITION) {
                 int currentQty = cartItem.getQty();
-                currentQty++; // ප්‍රමාණය 1කින් වැඩි කරනවා
+                currentQty++;
 
                 cartItem.setQty(currentQty);
-                cartItem.setProductPrice(currentQty * unitPrice); // අලුත් මිල හදනවා (Qty * UnitPrice)
+                cartItem.setProductPrice(currentQty * unitPrice);
 
-                // UI එක Update කරනවා
+
                 holder.foodQty.setText(String.format("%02d", currentQty));
-//                holder.foodPrice.setText("LKR " + cartItem.getProductPrice());
+
                 holder.foodPrice.setText(String.format("LKR %.2f", cartItem.getProductPrice()));
 
-                // Firebase Update කරන්න Fragment එකට මැසේජ් එක යවනවා
                 if(listener != null){
                     listener.onQuantityUpdated(cartItem);
                 }
@@ -80,7 +79,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         });
 
 
-        // Minus (-) Button Click Logic
+        // Minus (-)
         holder.btnCartMinus.setOnClickListener(v -> {
             int pos = holder.getAdapterPosition();
             if(pos != RecyclerView.NO_POSITION) {
@@ -105,12 +104,11 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                             .setMessage("Are you sure you want to remove this item from the cart?")
                             .setPositiveButton("Yes", (dialog, which) -> {
 
-                                // 1. මුලින්ම Firebase එකෙන් මකන්න Fragment එකට යවනවා
+
                                 if(listener != null){
                                     listener.onItemRemoved(currentItem);
                                 }
 
-                                // 2. ඊට පස්සේ ඇප් එකේ පේන ලිස්ට් එකෙන් අයින් කරනවා
                                 cartItems.remove(pos);
                                 notifyItemRemoved(pos);
                                 notifyItemRangeChanged(pos, cartItems.size());

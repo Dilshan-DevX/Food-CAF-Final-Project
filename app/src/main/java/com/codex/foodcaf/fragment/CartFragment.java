@@ -137,68 +137,7 @@ public class CartFragment extends Fragment {
                             /// /////////////////////////////////////////////////////////////////////////
 
 
-//                                adapter = new CartAdapter(cartItemList, new CartAdapter.CartItemInteractionListener() {
-//
-//                                    @Override
-//                                    public void onQuantityUpdated(CartItem cartItem) {
-//                                        // Product ID eka null da kiyala check karanawa
-//                                        if (cartItem.getProductId() == null || cartItem.getProductId().isEmpty()) {
-//                                            return;
-//                                        }
-//
-//                                        // Firebase database eke qty ekayi price ekayi update karanawa
-//                                        db.collection("users").document(uid).collection("cart")
-//                                                .document(cartItem.getProductId())
-//                                                .update(
-//                                                        "qty", cartItem.getQty(),
-//                                                        "productPrice", cartItem.getProductPrice()
-//                                                )
-//                                                .addOnSuccessListener(aVoid -> {
-//                                                    // Database eka update unata passe yatin thiyena total bill eka hadanawa
-//                                                    calculateTotal();
-//                                                })
-//                                                .addOnFailureListener(e -> {
-//                                                    Toast.makeText(getContext(), "Failed to update quantity: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-//                                                });
-//                                    }
-//
-//                                    @Override
-//                                    public void onItemRemoved(CartItem cartItem) {
-//
-//                                        // Product ID එක හිස්ද කියලා බලනවා
-//                                        if (cartItem.getProductId() == null || cartItem.getProductId().isEmpty()) {
-//                                            Toast.makeText(getContext(), "Error: Product ID is missing!", Toast.LENGTH_SHORT).show();
-//                                            return;
-//                                        }
-//
-//                                        // Firebase එකෙන් මකනවා
-//                                        db.collection("users").document(uid).collection("cart")
-//                                                .document(cartItem.getProductId())
-//                                                .delete()
-//                                                .addOnSuccessListener(aVoid -> {
-//                                                    Toast.makeText(getContext(), "Item removed successfully!", Toast.LENGTH_SHORT).show();
-//                                                    calculateTotal(); // බිල අලුත් කරනවා
-//                                                })
-//                                                .addOnFailureListener(e -> {
-//                                                    Toast.makeText(getContext(), "Failed to remove: " + e.getMessage(), Toast.LENGTH_LONG).show();
-//                                                });
-//                                    }
-//
-//                                    @Override
-//                                    public void onItemClick(Product product) {
-//                                        // පින්තූරය එබුවම ආයෙත් අදාළ කෑමේ Single Page එකට යනවා
-//                                        Bundle bundle = new Bundle();
-//                                        bundle.putString("productId", product.getProductId());
-//
-//                                        SingleProductFragment fragment = new SingleProductFragment();
-//                                        fragment.setArguments(bundle);
-//
-//                                        getParentFragmentManager().beginTransaction()
-//                                                .replace(R.id.fragmentContainer, fragment)
-//                                                .addToBackStack(null)
-//                                                .commit();
-//                                    }
-//                                });
+
 
                                 binding.cartRecyclerView.setAdapter(adapter);
 
@@ -222,11 +161,15 @@ public class CartFragment extends Fragment {
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new androidx.activity.OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                requireActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragmentContainer, new HomeFragment())
-                        .commit();
-                 BottomNavigationView bottomNav = getActivity().findViewById(R.id.bottomNavView);
-                 bottomNav.setSelectedItemId(R.id.bottom_nav_home);
+                com.google.android.material.bottomnavigation.BottomNavigationView bottomNav = requireActivity().findViewById(R.id.bottomNavView);
+
+                if (bottomNav != null) {
+                    bottomNav.setSelectedItemId(R.id.bottom_nav_home);
+                } else {
+                    requireActivity().getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.fragmentContainer, new HomeFragment())
+                            .commit();
+                }
             }
         });
     }
