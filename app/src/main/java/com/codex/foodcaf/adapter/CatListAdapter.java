@@ -122,11 +122,60 @@ public class CatListAdapter extends RecyclerView.Adapter<CatListAdapter.ViewHold
 
 /////////////////////////////////////////////////////////////////////////////////
 
+        holder.btnAdd.setOnClickListener(v -> {
+            com.google.firebase.auth.FirebaseAuth auth = com.google.firebase.auth.FirebaseAuth.getInstance();
+
+            if (auth.getCurrentUser() == null) {
+                android.widget.Toast.makeText(v.getContext(), "Please login to add items to cart", android.widget.Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            String uid = auth.getCurrentUser().getUid();
+            com.google.firebase.firestore.FirebaseFirestore db = com.google.firebase.firestore.FirebaseFirestore.getInstance();
+
+            com.codex.foodcaf.model.CartItem cartItem = new com.codex.foodcaf.model.CartItem();
+            cartItem.setProductId(product.getProductId());
+            cartItem.setProductName(product.getFoodTitle());
+            cartItem.setProductPrice(product.getProductPrice());
+            cartItem.setUnitPrice(product.getProductPrice());
+            cartItem.setQty(1);
+
+            // 🔴 අලුතෙන් එකතු කළ කොටස: Single Page එකේ වගේම Default Attribute එකක් හදලා දානවා
+            java.util.List<com.codex.foodcaf.model.CartItem.Attribute> attributes = new java.util.ArrayList<>();
+            com.codex.foodcaf.model.CartItem.Attribute attr = new com.codex.foodcaf.model.CartItem.Attribute();
+            attr.setValues(java.util.Collections.singletonList("Regular"));
+            attr.setPrice(java.util.Collections.singletonList(String.valueOf(product.getProductPrice())));
+            attributes.add(attr);
+
+            cartItem.setAttributes(attributes); // ඒක CartItem එකට Set කරනවා
+
+            // Cart එකේ සේව් වෙන Document ID එක
+            String docId = product.getProductId() + "_Regular";
+
+            db.collection("users").document(uid).collection("cart")
+                    .document(docId)
+                    .set(cartItem)
+                    .addOnSuccessListener(aVoid -> {
+                        android.widget.Toast.makeText(v.getContext(), "Added to Cart!", android.widget.Toast.LENGTH_SHORT).show();
+
+                        android.content.Intent intent = new android.content.Intent("com.codex.foodcaf.CART_UPDATED");
+                        intent.setPackage(v.getContext().getPackageName());
+                        v.getContext().sendBroadcast(intent);
+                    })
+                    .addOnFailureListener(e -> {
+                        android.widget.Toast.makeText(v.getContext(), "Failed to add", android.widget.Toast.LENGTH_SHORT).show();
+                    });
+        });
+
+
         holder.itemView.setOnClickListener(view -> {
             if (listener != null) {
                 listener.onListingItemClick(product);
             }
         });
+
+
+
     }
 
     @Override
@@ -143,6 +192,7 @@ public class CatListAdapter extends RecyclerView.Adapter<CatListAdapter.ViewHold
         TextView foodTime;
         TextView foodDetail;
         ImageView availability;
+        com.google.android.material.card.MaterialCardView btnAdd;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -153,6 +203,7 @@ public class CatListAdapter extends RecyclerView.Adapter<CatListAdapter.ViewHold
             foodTime = itemView.findViewById(R.id.foodTime);
             foodDetail = itemView.findViewById(R.id.foodCalories);
             availability = itemView.findViewById(R.id.avlb);
+            btnAdd = itemView.findViewById(R.id.btnAdd);
 
         }
     }

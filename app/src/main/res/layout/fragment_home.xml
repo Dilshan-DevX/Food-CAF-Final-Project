@@ -1,32 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nestedScrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.HomeFragment">
+    android:background="@color/md_theme_background"
+    android:fillViewport="true">
 
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="12dp"
-        android:layout_marginStart="10dp"
-        android:text="Popular now"
-        android:textColor="@color/md_theme_Text2"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-
-
-    <include
-        android:id="@+id/HomePop_section"
-        layout="@layout/item_section"
-        android:layout_marginTop="55dp"
-        android:layout_marginStart="10dp"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="80dp">
 
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvCategories"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="12dp"
+            android:clipToPadding="false"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/category_list_home" />
 
 
-</FrameLayout>
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/bannerCard"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="4dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="4dp">
+
+            <ImageView
+                android:id="@+id/imgBanner"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/applogo" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:orientation="vertical"
+                android:padding="18dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="New Year Offer"
+                    android:textSize="12sp"
+                    android:textColor="#FFFFFF"
+                    android:alpha="0.9" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="30% OFF"
+                    android:textSize="28sp"
+                    android:textStyle="bold"
+                    android:textColor="#FFFFFF" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="16 - 31 Dec"
+                    android:textSize="12sp"
+                    android:textColor="#FFFFFF"
+                    android:alpha="0.85"
+                    android:layout_marginBottom="10dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnBannerAction"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:text="Get Now"
+                    android:textSize="12sp"
+                    android:textColor="#1B5E20"
+                    app:backgroundTint="#FFFFFF"
+                    app:cornerRadius="18dp"
+                    style="@style/Widget.MaterialComponents.Button" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="10dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Best Selles"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/md_theme_Text2" />
+
+            <TextView
+                android:id="@+id/tvSeeAll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="See All"
+                android:textSize="13sp"
+                android:textColor="@color/md_theme_primary"
+                android:textStyle="bold"
+                android:padding="4dp" />
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvProducts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="8dp"
+            android:clipToPadding="false"
+            android:nestedScrollingEnabled="false"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="2"
+            tools:listitem="@layout/item_home_product" />
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>
