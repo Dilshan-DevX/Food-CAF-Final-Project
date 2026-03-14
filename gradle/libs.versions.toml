@@ -11,6 +11,9 @@ material = "1.13.0"
 activity = "1.12.4"
 constraintlayout = "2.2.1"
 picasso = "2.8"
+playServicesMaps = "20.0.0"
+secretsGradlePlugin = "2.0.1"
+playServicesLocation = "21.3.0"
 
 [libraries]
 dotsindicator = { module = "com.tbuonomo:dotsindicator", version.ref = "dotsindicator" }
@@ -25,6 +28,9 @@ material = { group = "com.google.android.material", name = "material", version.r
 activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 picasso = { module = "com.squareup.picasso:picasso", version.ref = "picasso" }
+play-services-maps = { module = "com.google.android.gms:play-services-maps", version.ref = "playServicesMaps" }
+secrets-gradle-plugin = { module = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin", version.ref = "secretsGradlePlugin" }
+play-services-location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "playServicesLocation" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

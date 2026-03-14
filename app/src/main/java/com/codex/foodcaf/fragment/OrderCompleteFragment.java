@@ -64,13 +64,13 @@ public class OrderCompleteFragment extends Fragment {
             binding.tvInvoice.setText("Invoice : #" + orderId);
             loadOrderDetails();
         } else {
-            startCountdown(25); // Order ID එක නැත්නම් Default විනාඩි 25යි
+            startCountdown(25);
         }
 
-        // ආපු ගමන් Step 1 Green කරනවා
+
         setStepActive(binding.iconStep1);
 
-        // තත්පර 30න් Step 2 Green කරනවා
+
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
             if (isAdded() && binding != null) {
                 setStepActive(binding.iconStep2);
@@ -78,14 +78,14 @@ public class OrderCompleteFragment extends Fragment {
         }, 30000);
 
         binding.btncall.setOnClickListener(v -> {
-            String phoneNumber = "0725245454"; // ඔයාට ඕන නම්බර් එක මෙතන දෙන්න
+            String phoneNumber = "0725245454";
             Intent intent = new Intent(Intent.ACTION_DIAL);
             intent.setData(Uri.parse("tel:" + phoneNumber));
             startActivity(intent);
         });
 
         binding.btnMessage.setOnClickListener(v -> {
-            String phoneNumber = "0725245454"; // අර කලින් දුන්න නම්බර් එකම දෙන්න
+            String phoneNumber = "0725245454";
 
             Intent intent = new Intent(Intent.ACTION_SENDTO);
             intent.setData(Uri.parse("smsto:" + phoneNumber));
@@ -106,19 +106,19 @@ public class OrderCompleteFragment extends Fragment {
                             Order order = documentSnapshot.toObject(Order.class);
 
                             if (order != null) {
-                                // 1. Date එක සෙට් කිරීම
+
                                 if (order.getOrderDate() != null) {
                                     binding.tvStep1Sub.setText("🕒 " + order.getOrderDate());
                                 }
 
-                                // 2. කෑම ගාණ බලලා වෙලාව තීරණය කිරීම
+
                                 List<Order.OrderItem> items = order.getOrderItems();
 
                                 if (items != null && items.size() > 1) {
-                                    // කෑම වර්ග එකකට වඩා තියෙනවා නම් කෙළින්ම විනාඩි 25යි
+
                                     startCountdown(25);
                                 } else if (items != null && items.size() == 1) {
-                                    // කෑම තියෙන්නේ එකයි නම්, ඒකේ වෙලාව Database එකෙන් ගන්නවා
+
                                     getSingleItemTime(items.get(0).getProductId());
                                 } else {
                                     startCountdown(25);
@@ -139,7 +139,7 @@ public class OrderCompleteFragment extends Fragment {
                 });
     }
 
-    // එක කෑමක් විතරක් තියෙද්දී ඒකේ වෙලාව ගන්න මෙතඩ් එක
+
     private void getSingleItemTime(String productId) {
         if (productId == null) {
             startCountdown(25);
@@ -165,7 +165,7 @@ public class OrderCompleteFragment extends Fragment {
                 });
     }
 
-    // අකුරු අයින් කරලා ඉලක්කම ගන්න මෙතඩ් එක
+
     private int extractTime(String timeStr) {
         try {
             if (timeStr == null || timeStr.isEmpty()) return 25;
@@ -178,7 +178,7 @@ public class OrderCompleteFragment extends Fragment {
 
     private void startCountdown(int minutes) {
         if (countDownTimer != null) {
-            countDownTimer.cancel(); // කලින් එකක් දුවනවා නම් නවත්වනවා
+            countDownTimer.cancel();
         }
 
         long millis = minutes * 60 * 1000L;
@@ -191,7 +191,7 @@ public class OrderCompleteFragment extends Fragment {
                 long minutesLeft = millisUntilFinished / 60000;
                 binding.tvETA.setText(String.format("%02d min", minutesLeft));
 
-                // අන්තිම විනාඩියට ආවම Step 3 Green කරනවා
+
                 if (millisUntilFinished <= 60000) {
                     setStepActive(binding.iconStep3);
                 }
@@ -215,7 +215,7 @@ public class OrderCompleteFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         if (countDownTimer != null) {
-            countDownTimer.cancel(); // පිටුවෙන් යද්දී Timer එක නවත්වනවා (Crash නොවෙන්න)
+            countDownTimer.cancel();
         }
         binding = null;
     }
