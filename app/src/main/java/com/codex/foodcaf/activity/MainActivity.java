@@ -148,6 +148,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (currentUser != null) {
 
+//                com.google.firebase.firestore.FirebaseFirestore.getInstance()
+//                        .collection("users")
+//                        .document(currentUser.getUid())
+//                        .get()
+//                        .addOnSuccessListener(documentSnapshot -> {
+//                            if (documentSnapshot.exists()) {
+//                                Boolean status = documentSnapshot.getBoolean("status");
+//
+//                                if (status != null && !status) {
+//                                    firebaseAuth.signOut();
+//                                    Toast.makeText(MainActivity.this, "Your account is Suspended. Please contact admin.", Toast.LENGTH_LONG).show();
+//
+//
+//                                    Intent intent = new Intent(MainActivity.this, SigninActivity.class);
+//                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                                    startActivity(intent);
+//                                    finish();
+//                                }
+//                            }
+//                        });
+
 
 
             firebaseFirestore.collection("users").document(currentUser.getUid())
@@ -158,6 +179,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         }
 
                         if (documentSnapshot != null && documentSnapshot.exists()) {
+
+                            Boolean status = documentSnapshot.getBoolean("status");
+                            if (status != null && !status) {
+                                firebaseAuth.signOut();
+
+                                android.content.Intent broadcastIntent = new android.content.Intent("com.codex.foodcaf.ACCOUNT_SUSPENDED");
+                                broadcastIntent.setPackage(getPackageName());
+                                sendBroadcast(broadcastIntent);
+
+
+                                Intent intent = new Intent(MainActivity.this, SigninActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(intent);
+                                finish();
+                            }
+
                             User user = documentSnapshot.toObject(User.class);
                             if (user != null) {
 
@@ -169,7 +206,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                 if (profilePicUrl != null && !profilePicUrl.isEmpty()) {
                                     Log.d("ProfilePicUrl", profilePicUrl);
 
-                                    // Profile Activity ane App crash thavathi bachavva check karo
+
                                     if (!isDestroyed()) {
                                         Glide.with(MainActivity.this)
                                                 .load(profilePicUrl)

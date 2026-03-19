@@ -120,7 +120,8 @@ public class SignUpActivity extends AppCompatActivity {
                         User user = User.builder()
                                 .uId(uid)
                                 .name(name)
-                                .email(email).build();
+                                .email(email)
+                                .status(true).build();
 
                         firebaseFirestore.collection("users").document(uid).set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
