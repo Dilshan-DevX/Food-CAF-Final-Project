@@ -20,6 +20,14 @@
         android:theme="@style/Theme.FoodCAF">
 
         <receiver
+            android:name=".receiver.AccountSuspendedReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.codex.foodcaf.ACCOUNT_SUSPENDED" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
             android:name=".receiver.CartNotificationReceiver"
             android:exported="false">
             <intent-filter>
