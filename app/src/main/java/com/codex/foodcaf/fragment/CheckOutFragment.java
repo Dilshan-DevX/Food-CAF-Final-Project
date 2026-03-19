@@ -654,6 +654,56 @@ public class CheckOutFragment extends Fragment implements OnMapReadyCallback {
                 return;
             }
 
+//            selectedPaymentId = binding.radioGroupPayment.getCheckedRadioButtonId();
+//            if (selectedPaymentId == binding.radioCOD.getId()) {
+//                selectedPaymentMethod = binding.radioCOD.getText().toString();
+//            } else if (selectedPaymentId == binding.radioCard.getId()) {
+//                selectedPaymentMethod = binding.radioCard.getText().toString();
+//            }
+//
+//            uniqueOrderId = "ORD_" + System.currentTimeMillis();
+//
+//            if (selectedPaymentId == binding.radioCard.getId()) {
+//                if (paymentActive) {
+//                    InitRequest req = new InitRequest();
+//                    req.setSandBox(true);
+//                    req.setMerchantId("1225048");
+//                    req.setMerchantSecret("MTMxNzk2OTI5MDIxNDIxNDMwOTEyOTkzMjkyMjc2MjQwNTU3MzAyOQ==");
+//                    req.setCurrency("LKR");
+//                    req.setAmount(totalCost);
+//                    req.setOrderId(uniqueOrderId);
+//                    req.setItemsDescription("Thank you for your order");
+//                    req.getCustomer().setFirstName(newName);
+//                    req.getCustomer().setLastName(".");
+//                    req.getCustomer().setEmail(newEmail);
+//                    req.getCustomer().setPhone(newNumber);
+//                    req.getCustomer().getAddress().setAddress(newAddress);
+//                    req.getCustomer().getAddress().setCity(".");
+//                    req.getCustomer().getAddress().setCountry("Sri Lanka");
+//                    req.setNotifyUrl("https://foodcaf.requestcatcher.com/");
+//
+//                    Intent intent = new Intent(getActivity(), PHMainActivity.class);
+//                    intent.putExtra(PHConstants.INTENT_EXTRA_DATA, req);
+//                    paymentLauncher.launch(intent);
+//                }
+//            } else {
+//                if (isBuyNow && buyNowItems != null) {
+//                    placeOrder(buyNowItems, "Pending", null);
+//                } else {
+//                    db.collection("users").document(uid).collection("cart")
+//                            .get()
+//                            .addOnSuccessListener(qds -> {
+//                                if (!qds.isEmpty()) {
+//                                    List<CartItem> cartItems = qds.toObjects(CartItem.class);
+//                                    placeOrder(cartItems, "Pending", qds);
+//                                }
+//                            });
+//                }
+//            }
+
+            binding.btnConfirmOrder.setEnabled(false);
+            binding.btnConfirmOrder.setText("Processing...");
+
             selectedPaymentId = binding.radioGroupPayment.getCheckedRadioButtonId();
             if (selectedPaymentId == binding.radioCOD.getId()) {
                 selectedPaymentMethod = binding.radioCOD.getText().toString();
@@ -666,6 +716,7 @@ public class CheckOutFragment extends Fragment implements OnMapReadyCallback {
             if (selectedPaymentId == binding.radioCard.getId()) {
                 if (paymentActive) {
                     InitRequest req = new InitRequest();
+                    // PayHere Details ටික (කලින් විදියටම)...
                     req.setSandBox(true);
                     req.setMerchantId("1225048");
                     req.setMerchantSecret("MTMxNzk2OTI5MDIxNDIxNDMwOTEyOTkzMjkyMjc2MjQwNTU3MzAyOQ==");
@@ -696,10 +747,19 @@ public class CheckOutFragment extends Fragment implements OnMapReadyCallback {
                                 if (!qds.isEmpty()) {
                                     List<CartItem> cartItems = qds.toObjects(CartItem.class);
                                     placeOrder(cartItems, "Pending", qds);
+                                } else {
+                                    // 🔴 Cart එක හිස් නම් ආයෙත් බට්න් එක හදනවා
+                                    binding.btnConfirmOrder.setEnabled(true);
+                                    binding.btnConfirmOrder.setText("Confirm Order");
                                 }
+                            })
+                            .addOnFailureListener(e -> {
+                                binding.btnConfirmOrder.setEnabled(true);
+                                binding.btnConfirmOrder.setText("Confirm Order");
                             });
                 }
             }
+
         });
     }
 
@@ -863,24 +923,35 @@ public class CheckOutFragment extends Fragment implements OnMapReadyCallback {
         db.collection("orders").document(order.getOrderId())
                 .set(order)
                 .addOnSuccessListener(aVoid -> {
+                    if (!isAdded()) return; // 🔴 ආරක්ෂිත පියවර
+
                     Toast.makeText(getContext(), "Order placed successfully!", Toast.LENGTH_SHORT).show();
 
-                    if (qds != null) {
+                    if (qds != null && !qds.isEmpty()) {
                         WriteBatch batch = db.batch();
                         for (DocumentSnapshot document : qds.getDocuments()) {
                             batch.delete(document.getReference());
                         }
                         batch.commit()
                                 .addOnSuccessListener(aVoid1 -> navigateToOrderComplete(order.getOrderId()))
-                                .addOnFailureListener(e -> Toast.makeText(getContext(), "Failed to clear cart: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+                                .addOnFailureListener(e -> navigateToOrderComplete(order.getOrderId()));
                     } else {
                         navigateToOrderComplete(order.getOrderId());
                     }
                 })
-                .addOnFailureListener(e -> Toast.makeText(getContext(), "Order failed: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+                .addOnFailureListener(e -> {
+                    if (!isAdded()) return;
+                    Toast.makeText(getContext(), "Order failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+
+                    // 🔴 Fail වුණොත් ආයෙත් බට්න් එක ඔබන්න දෙනවා
+                    binding.btnConfirmOrder.setEnabled(true);
+                    binding.btnConfirmOrder.setText("Confirm Order");
+                });
     }
 
     private void navigateToOrderComplete(String orderId) {
+        if (!isAdded()) return; // 🔴 ආරක්ෂිත පියවර
+
         OrderCompleteFragment fragment = new OrderCompleteFragment();
         Bundle bundle = new Bundle();
         bundle.putString("ORDER_ID", orderId);
@@ -889,7 +960,7 @@ public class CheckOutFragment extends Fragment implements OnMapReadyCallback {
         requireActivity().getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragmentContainer, fragment)
-                .commit();
+                .commitAllowingStateLoss();
     }
 
     private final ActivityResultLauncher<Intent> paymentLauncher =
@@ -902,10 +973,14 @@ public class CheckOutFragment extends Fragment implements OnMapReadyCallback {
                             saveOrderAfterCardPayment(response.getData());
                         } else {
                             Log.e("PAYHERE", response.getData().getMessage());
+                            binding.btnConfirmOrder.setEnabled(true); // 🔴
+                            binding.btnConfirmOrder.setText("Confirm Order");
                         }
                     }
                 } else if (result.getResultCode() == Activity.RESULT_CANCELED) {
                     Log.e("PAYHERE", "Payment Canceled");
+                    binding.btnConfirmOrder.setEnabled(true); // 🔴 Cancel කළොත් බට්න් එක යථා තත්ත්වයට පත් කරනවා
+                    binding.btnConfirmOrder.setText("Confirm Order");
                 }
             });
 
