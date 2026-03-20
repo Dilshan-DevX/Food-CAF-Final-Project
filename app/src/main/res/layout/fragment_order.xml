@@ -73,7 +73,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="4dp"
-                    android:text="Desert show cafe"
+                    android:text="No Orders !"
                     android:textColor="#222222"
                     android:textSize="15sp"
                     android:textStyle="bold"
@@ -86,7 +86,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="Jul 15, 2021 - 11:05 AM"
+                    android:text="Jul ##, 202# - ##:## ##"
                     android:textColor="#999999"
                     android:textSize="12sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -106,7 +106,7 @@
                         android:id="@+id/OrderStatus"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Delivered"
+                        android:text="######"
                         android:textColor="#2EBA63"
                         android:textSize="13sp" />
 

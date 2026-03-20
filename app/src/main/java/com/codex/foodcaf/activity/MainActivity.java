@@ -9,14 +9,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -28,7 +24,7 @@ import com.codex.foodcaf.databinding.ActivityMainBinding;
 import com.codex.foodcaf.databinding.SideNavHeaderBinding;
 import com.codex.foodcaf.fragment.CartFragment;
 import com.codex.foodcaf.fragment.CategoryFragment;
-import com.codex.foodcaf.fragment.FavFragment;
+import com.codex.foodcaf.fragment.FavouritesFragment;
 import com.codex.foodcaf.fragment.HomeFragment;
 import com.codex.foodcaf.fragment.MessageFragment;
 import com.codex.foodcaf.fragment.OrderFragment;
@@ -288,7 +284,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             bottomNavigationView.getMenu().findItem(R.id.bottom_profile).setChecked(true);
 
         } else if (itemId == R.id.side_nav_favorite) {
-            loadFragment(new FavFragment());
+            /// ////////////////////////
+            loadFragment(new FavouritesFragment());
             navigationView.setCheckedItem(R.id.side_nav_favorite);
 
         } else if (itemId == R.id.side_nav_cart) {

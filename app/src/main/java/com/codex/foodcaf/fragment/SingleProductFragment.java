@@ -385,6 +385,7 @@
 package com.codex.foodcaf.fragment;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
@@ -622,6 +623,34 @@ public class SingleProductFragment extends Fragment {
                         }
                     }
                 });
+
+        binding.btnFav.setOnClickListener(v -> {
+            FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+            if (firebaseAuth.getCurrentUser() == null) {
+                Toast.makeText(getContext(), "Please login to add to favourites", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getActivity(), SigninActivity.class));
+                return;
+            }
+
+            String uid = firebaseAuth.getCurrentUser().getUid();
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+            // FavModel එකක් හදාගෙන Data එක සෙට් කරනවා
+            Map<String, Object> favData = new HashMap<>();
+            favData.put("productId", productId);
+
+            // Document ID එක විදියට Product ID එකම දානවා (එතකොට Duplicate වෙන්නේ නෑ)
+            db.collection("users").document(uid).collection("fav")
+                    .document(productId)
+                    .set(favData)
+                    .addOnSuccessListener(aVoid -> {
+                        Toast.makeText(getContext(), "Added to Favourites! ♡", Toast.LENGTH_SHORT).show();
+                        binding.btnFav.setColorFilter(Color.parseColor("#E05C2A")); // පාට වෙනස් කරනවා
+                    })
+                    .addOnFailureListener(e -> {
+                        Toast.makeText(getContext(), "Failed to add to Favourites", Toast.LENGTH_SHORT).show();
+                    });
+        });
 
         loadPopularProducts();
     }
