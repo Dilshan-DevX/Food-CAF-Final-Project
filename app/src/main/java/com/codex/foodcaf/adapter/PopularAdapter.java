@@ -44,14 +44,14 @@ public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.ViewHold
         holder.price.setText("LKR " + p.getProductPrice());
         holder.rating.setText(p.getFoodRating());
 
-        // පින්තූරය ලෝඩ් කිරීම
+
         if (p.getProductImage() != null && !p.getProductImage().isEmpty()) {
             Glide.with(holder.itemView.getContext())
                     .load(p.getProductImage().get(0))
                     .into(holder.image);
         }
 
-        // කෑම එකක් එබුවම ඒකට අදාළ දේවල් කරන්න
+
         holder.itemView.setOnClickListener(v -> listener.onClick(p));
     }
 

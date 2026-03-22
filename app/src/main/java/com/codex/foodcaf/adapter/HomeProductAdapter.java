@@ -27,7 +27,6 @@ public class HomeProductAdapter extends RecyclerView.Adapter<HomeProductAdapter.
     private List<Product> productList;
     private OnHomeProductClickListener listener;
 
-    // 🔴 Constructor එකට Listener එකත් එකතු කළා
     public HomeProductAdapter(List<Product> productList, OnHomeProductClickListener listener) {
         this.productList = productList;
         this.listener = listener;
@@ -61,14 +60,13 @@ public class HomeProductAdapter extends RecyclerView.Adapter<HomeProductAdapter.
                     .into(holder.imgProduct);
         }
 
-        // 🔴 1. මුළු අයිටම් එකම (පින්තූරය/නම) ක්ලික් කළාම Single Page එකට යන්න
         holder.itemView.setOnClickListener(v -> {
             if (listener != null) {
                 listener.onProductClick(product);
             }
         });
 
-        // 🔴 2. + (Add) බට්න් එක ක්ලික් කළාම Cart එකට Add වෙන්න
+
         holder.btnAdd.setOnClickListener(v -> {
             FirebaseAuth auth = FirebaseAuth.getInstance();
 
@@ -87,7 +85,7 @@ public class HomeProductAdapter extends RecyclerView.Adapter<HomeProductAdapter.
             cartItem.setUnitPrice(product.getProductPrice());
             cartItem.setQty(1);
 
-            // "Regular" කියන Default Attribute එක දානවා (කලින් විදියටම)
+            // Regular
             List<CartItem.Attribute> attributes = new ArrayList<>();
             CartItem.Attribute attr = new CartItem.Attribute();
             attr.setValues(Collections.singletonList("Regular"));
@@ -96,7 +94,7 @@ public class HomeProductAdapter extends RecyclerView.Adapter<HomeProductAdapter.
 
             cartItem.setAttributes(attributes);
 
-            // Document ID එක "ID_Regular" විදියට හැදෙනවා
+            // Document ID
             String docId = product.getProductId() + "_Regular";
 
             db.collection("users").document(uid).collection("cart")
@@ -138,7 +136,7 @@ public class HomeProductAdapter extends RecyclerView.Adapter<HomeProductAdapter.
         }
     }
 
-    // 🔴 Click Listener Interface එක
+
     public interface OnHomeProductClickListener {
         void onProductClick(Product product);
     }

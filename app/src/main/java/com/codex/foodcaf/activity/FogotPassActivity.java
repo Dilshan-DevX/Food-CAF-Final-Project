@@ -89,7 +89,7 @@ public class FogotPassActivity extends AppCompatActivity {
 
     private static final String TAG = "ForgotPassDebug";
 
-    // ✅ OkHttp use karala Firebase Auth REST API ekata password reset request yawanawa
+    /////////////////////////////////////////// OkHttp ////////////////////////////////////////////
     private void sendPasswordResetEmail(String email) {
         setBusy(true);
         hideMessage();
@@ -159,7 +159,7 @@ public class FogotPassActivity extends AppCompatActivity {
         });
     }
 
-    // ── Parse Firebase error message ──────────────────────────────────────────
+
     private String parseFirebaseError(String responseBody) {
         try {
             JSONObject json = new JSONObject(responseBody);
@@ -178,7 +178,7 @@ public class FogotPassActivity extends AppCompatActivity {
                 case "API_KEY_INVALID":
                 case "INVALID_API_KEY":
                     return "Configuration error. Please contact support.";
-                // ✅ New Firebase REST API v2 error format
+
                 default:
                     if (code.contains("INVALID_LOGIN_CREDENTIALS") || code.contains("EMAIL_NOT_FOUND")) {
                         return "No account found with this email address.";
@@ -201,8 +201,8 @@ public class FogotPassActivity extends AppCompatActivity {
         tvMessage.setVisibility(View.VISIBLE);
         tvMessage.setText(msg);
         tvMessage.setTextColor(isSuccess
-                ? Color.parseColor("#2EBA63")   // green — success
-                : Color.parseColor("#F44336")); // red — error
+                ? Color.parseColor("#2EBA63")
+                : Color.parseColor("#F44336"));
     }
 
     private void hideMessage() {

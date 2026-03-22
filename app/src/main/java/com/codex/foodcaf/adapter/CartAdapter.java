@@ -26,7 +26,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     private List<CartItem> cartItems;
     private CartItemInteractionListener listener;
 
-    // 🔴 Interface එකේ නම වෙනස් කළා Cart එකට ගැළපෙන්න
     public CartAdapter(List<CartItem> cartItems, CartItemInteractionListener listener) {
         this.cartItems = cartItems;
         this.listener = listener;

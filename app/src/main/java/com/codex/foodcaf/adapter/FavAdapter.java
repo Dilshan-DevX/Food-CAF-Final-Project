@@ -49,12 +49,12 @@ public class FavAdapter extends RecyclerView.Adapter<FavAdapter.ViewHolder> {
                     .into(holder.imgFavFood);
         }
 
-        // View Product බට්න් එක
+        // View Product
         holder.btnViewProduct.setOnClickListener(v -> {
             if (listener != null) listener.onViewClick(product);
         });
 
-        // Remove බට්න් එක
+        // Remove
         holder.removeBtn.setOnClickListener(v -> {
             if (listener != null) listener.onRemoveClick(product, position);
         });

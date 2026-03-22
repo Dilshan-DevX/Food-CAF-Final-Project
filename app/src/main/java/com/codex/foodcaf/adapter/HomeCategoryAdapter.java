@@ -37,7 +37,6 @@ public class HomeCategoryAdapter extends RecyclerView.Adapter<HomeCategoryAdapte
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Category category = categoryList.get(position);
 
-        // Mee Category model lo unde methods batti ivi marchukondi
         holder.categoryName.setText(category.getCategoryName());
 
         if (category.getCategoryImage() != null && !category.getCategoryImage().isEmpty()) {
