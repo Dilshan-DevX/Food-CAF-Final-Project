@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#F7F8FA">
+    android:orientation="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -17,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Order History"
-            android:textColor="#222222"
+            android:textColor="@color/md_theme_Text2"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -30,8 +29,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="#F7F8FA">
+        android:orientation="vertical">
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
@@ -39,7 +37,7 @@
             android:layout_marginHorizontal="20dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            app:cardBackgroundColor="#FFFFFF"
+            app:cardBackgroundColor="@color/md_theme_itemPop"
             app:cardCornerRadius="16dp"
             app:cardElevation="3dp"
             app:strokeWidth="0dp">
@@ -74,7 +72,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="4dp"
                     android:text="No Orders !"
-                    android:textColor="#222222"
+                    android:textColor="@color/md_theme_Text2"
                     android:textSize="15sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -215,10 +213,10 @@
                 android:layout_height="52dp"
                 android:layout_marginTop="16dp"
                 android:text="REPEAT ORDER"
-                android:textColor="#148B7C"
+                android:textColor="@color/md_theme_Text2"
                 android:textSize="13sp"
                 android:textStyle="bold"
-                app:backgroundTint="#EDF4F6"
+                app:backgroundTint="@color/btn_color_primary"
                 app:cornerRadius="26dp"
                 app:elevation="0dp" />
 

@@ -51,7 +51,10 @@ dependencies {
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
+
     implementation libs.glide
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.16.0'
+
     implementation libs.picasso
 
     compileOnly("org.projectlombok:lombok:1.18.42")

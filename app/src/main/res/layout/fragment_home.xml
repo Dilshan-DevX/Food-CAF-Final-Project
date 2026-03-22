@@ -53,34 +53,40 @@
                 android:padding="18dp">
 
                 <TextView
+                    android:id="@+id/bannerTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="New Year Offer"
-                    android:textSize="12sp"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
                     android:textColor="#FFFFFF"
                     android:alpha="0.9" />
 
                 <TextView
+                    android:id="@+id/banerBody"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="30% OFF"
-                    android:textSize="28sp"
+                    android:textSize="25sp"
                     android:textStyle="bold"
-                    android:textColor="#FFFFFF" />
+                    android:textColor="@color/md_theme_home_card2" />
 
                 <TextView
+                    android:id="@+id/bannerDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="16 - 31 Dec"
                     android:textSize="12sp"
+                    android:textStyle="bold"
                     android:textColor="#FFFFFF"
                     android:alpha="0.85"
-                    android:layout_marginBottom="10dp" />
+                    android:layout_marginBottom="5dp" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnBannerAction"
                     android:layout_width="wrap_content"
                     android:layout_height="36dp"
+                    android:gravity="center"
                     android:text="Get Now"
                     android:textSize="12sp"
                     android:textColor="#1B5E20"

@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:background="#F7F8FA">
+    android:orientation="vertical">
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
@@ -13,7 +12,7 @@
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
-        app:cardBackgroundColor="#FFFFFF"
+        app:cardBackgroundColor="@color/md_theme_itemPop"
         app:cardCornerRadius="16dp"
         app:cardElevation="3dp"
         app:strokeWidth="0dp">
@@ -48,7 +47,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="4dp"
                 android:text="Desert show cafe"
-                android:textColor="#222222"
+                android:textColor="@color/md_theme_Text2"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"

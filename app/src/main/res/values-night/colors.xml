@@ -24,6 +24,14 @@
 
     <color name="md_theme_dotind">#BFC9D1</color>
 
+
+    <color name="md_theme_home_card1">#6367FF</color>
+
+    <color name="md_theme_home_card2">#FF5A5A</color>
+
+    <color name="md_theme_home_card3">#FF8B5A</color>
+
+
     <color name="md_theme_onPrimary">#00382A</color>
     <color name="md_theme_primaryContainer">#00674F</color>
     <color name="md_theme_onPrimaryContainer">#90E2C4</color>

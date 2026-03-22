@@ -9,7 +9,7 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardBackgroundColor="#FFFFFF"
+        app:cardBackgroundColor="@color/md_theme_itemPop"
         app:cardCornerRadius="20dp"
         app:cardElevation="4dp"
         app:strokeWidth="0dp"
@@ -87,7 +87,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Food Name"
-                    android:textColor="#1A1A1A"
+                    android:textColor="@color/md_theme_Text2"
                     android:textSize="14sp"
                     android:textStyle="bold"
                     android:maxLines="2"
@@ -130,7 +130,7 @@
                     android:textSize="12sp"
                     android:textStyle="bold"
                     android:textColor="#FFFFFF"
-                    app:backgroundTint="#1A1A1A"
+                    app:backgroundTint="@color/btn_color_primary2"
                     app:cornerRadius="12dp"
                     app:elevation="0dp" />
 
