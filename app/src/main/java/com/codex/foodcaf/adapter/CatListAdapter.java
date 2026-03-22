@@ -57,10 +57,6 @@ public class CatListAdapter extends RecyclerView.Adapter<CatListAdapter.ViewHold
             holder.availability.setColorFilter(android.graphics.Color.parseColor("#F44336"));
         }
 
-//            Glide.with(holder.itemView.getContext())
-//                    .load(product.getProductImage().get(0))
-////                    .circleCrop()
-//                    .into(holder.foodImage);
 
         /// ////////////////////////////////////////////////////////////////////
 
@@ -88,17 +84,17 @@ public class CatListAdapter extends RecyclerView.Adapter<CatListAdapter.ViewHold
 
                                 java.util.List<String> downloadUrls = new java.util.ArrayList<>();
                                 for (Object obj : objects) {
-                                    downloadUrls.add(obj.toString()); // ලින්ක් ටික Array එකකට දාගන්නවා
+                                    downloadUrls.add(obj.toString());
                                 }
 
-                                // 1. UI එකේ පෙන්නන්න පළවෙනි පින්තූරය Glide එකට දෙනවා
+
                                 if (!downloadUrls.isEmpty()) {
                                     Glide.with(holder.itemView.getContext())
                                             .load(downloadUrls.get(0))
                                             .into(holder.foodImage);
                                 }
 
-                                // 2. Firestore එකේ ඩේටා එක Update කරනවා (පින්තූර ඔක්කොම)
+
                                 com.google.firebase.firestore.FirebaseFirestore db = com.google.firebase.firestore.FirebaseFirestore.getInstance();
                                 db.collection("products")
                                         .whereEqualTo("productId", product.getProductId())
@@ -107,11 +103,10 @@ public class CatListAdapter extends RecyclerView.Adapter<CatListAdapter.ViewHold
                                             if (!querySnapshot.isEmpty()) {
                                                 String documentId = querySnapshot.getDocuments().get(0).getId();
 
-                                                // 🔴 Database එකට ලින්ක් ඔක්කොම ඇතුළත් Array එක යවනවා
+
                                                 db.collection("products").document(documentId)
                                                         .update("productImage", downloadUrls);
 
-                                                // Object එකත් අප්ඩේට් කරනවා
                                                 product.setProductImage(downloadUrls);
                                             }
                                         });
@@ -140,16 +135,14 @@ public class CatListAdapter extends RecyclerView.Adapter<CatListAdapter.ViewHold
             cartItem.setUnitPrice(product.getProductPrice());
             cartItem.setQty(1);
 
-            // 🔴 අලුතෙන් එකතු කළ කොටස: Single Page එකේ වගේම Default Attribute එකක් හදලා දානවා
             java.util.List<com.codex.foodcaf.model.CartItem.Attribute> attributes = new java.util.ArrayList<>();
             com.codex.foodcaf.model.CartItem.Attribute attr = new com.codex.foodcaf.model.CartItem.Attribute();
             attr.setValues(java.util.Collections.singletonList("Regular"));
             attr.setPrice(java.util.Collections.singletonList(String.valueOf(product.getProductPrice())));
             attributes.add(attr);
 
-            cartItem.setAttributes(attributes); // ඒක CartItem එකට Set කරනවා
+            cartItem.setAttributes(attributes);
 
-            // Cart එකේ සේව් වෙන Document ID එක
             String docId = product.getProductId() + "_Regular";
 
             db.collection("users").document(uid).collection("cart")

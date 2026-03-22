@@ -175,9 +175,8 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
         }
         holder.tvTotalPrice.setText(String.format("LKR %.2f", total + 100));
 
-        // ✅ item_order_history.xml eke imgRestaurant — default @drawable/order
-        // Firestore eken productImage load karanawa
-        holder.imgRestaurant.setImageResource(R.drawable.order); // default
+
+        holder.imgRestaurant.setImageResource(R.drawable.order);
 
         if (order.getOrderItems() != null && !order.getOrderItems().isEmpty()) {
             String productId = order.getOrderItems().get(0).getProductId();
@@ -186,7 +185,7 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
             if (productId != null && !productId.isEmpty()) {
                 holder.imgRestaurant.setTag(productId);
                 Glide.with(holder.imgRestaurant.getContext()).clear(holder.imgRestaurant);
-                holder.imgRestaurant.setImageResource(R.drawable.order); // recycle wena wita default
+                holder.imgRestaurant.setImageResource(R.drawable.order);
 
                 FirebaseFirestore.getInstance()
                         .collection("products")
@@ -246,7 +245,7 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
             tvStatus              = itemView.findViewById(R.id.tvStatus);
             tvTotalPrice          = itemView.findViewById(R.id.tvTotalPrice);
             iconStatus            = itemView.findViewById(R.id.iconStatus);
-            imgRestaurant         = itemView.findViewById(R.id.imgRestaurant);  // item_order_history.xml
+            imgRestaurant         = itemView.findViewById(R.id.imgRestaurant);
             expandedDetailsLayout = itemView.findViewById(R.id.expandedDetailsLayout);
         }
     }

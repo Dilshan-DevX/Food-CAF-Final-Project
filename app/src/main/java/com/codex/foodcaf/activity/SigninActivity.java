@@ -22,7 +22,7 @@ public class SigninActivity extends AppCompatActivity {
 
     private ActivitySigninBinding binding;
     private FirebaseAuth firebaseAuth;
-    private FirebaseFirestore db; // 🔴 අලුතෙන් එකතු කළා
+    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +32,7 @@ public class SigninActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         firebaseAuth = FirebaseAuth.getInstance();
-        db = FirebaseFirestore.getInstance(); // 🔴 Initialize කළා
+        db = FirebaseFirestore.getInstance();
 
         binding.signinTxtSignup.setOnClickListener(view -> {
             Intent intent = new Intent(SigninActivity.this, SignUpActivity.class);
@@ -71,18 +71,15 @@ public class SigninActivity extends AppCompatActivity {
                         if (currentUser != null) {
                             String uid = currentUser.getUid();
 
-                            // 2. Authentication හරි නම්, Firestore එකෙන් Status එක බලනවා
                             db.collection("users").document(uid).get().addOnSuccessListener(documentSnapshot -> {
                                 if (documentSnapshot.exists()) {
-                                    // Status එක ගන්නවා (boolean)
                                     Boolean status = documentSnapshot.getBoolean("status");
 
-                                    // 3. Status එක true ද බලනවා
                                     if (status != null && status) {
-                                        // Status true නම් විතරක් ඇතුළට යවනවා
+
                                         updateUI(currentUser);
                                     } else {
-                                        // Status false නම් ආපහු Sign out කරලා මැසේජ් එකක් දෙනවා
+
                                         firebaseAuth.signOut();
                                         Toast.makeText(SigninActivity.this, "Your account is Suspended. Please contact admin.", Toast.LENGTH_LONG).show();
                                     }

@@ -144,28 +144,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (currentUser != null) {
 
-//                com.google.firebase.firestore.FirebaseFirestore.getInstance()
-//                        .collection("users")
-//                        .document(currentUser.getUid())
-//                        .get()
-//                        .addOnSuccessListener(documentSnapshot -> {
-//                            if (documentSnapshot.exists()) {
-//                                Boolean status = documentSnapshot.getBoolean("status");
-//
-//                                if (status != null && !status) {
-//                                    firebaseAuth.signOut();
-//                                    Toast.makeText(MainActivity.this, "Your account is Suspended. Please contact admin.", Toast.LENGTH_LONG).show();
-//
-//
-//                                    Intent intent = new Intent(MainActivity.this, SigninActivity.class);
-//                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                                    startActivity(intent);
-//                                    finish();
-//                                }
-//                            }
-//                        });
-
-
 
             firebaseFirestore.collection("users").document(currentUser.getUid())
                     .addSnapshotListener((documentSnapshot, e) -> {
@@ -236,7 +214,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     .into(sideNavHeaderBinding.HeaderPic);
         }
 
-//        firebaseAuth.signOut();
 
     }
 

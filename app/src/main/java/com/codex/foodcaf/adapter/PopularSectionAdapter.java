@@ -44,7 +44,6 @@ public class PopularSectionAdapter extends RecyclerView.Adapter<PopularSectionAd
 
             Glide.with(holder.itemView.getContext())
                     .load(product.getProductImage().get(0))
-//                    .circleCrop()
                     .into(holder.foodImage);
 
         holder.itemView.setOnClickListener(view -> {
