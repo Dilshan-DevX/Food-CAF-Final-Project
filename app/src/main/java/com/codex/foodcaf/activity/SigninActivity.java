@@ -40,6 +40,11 @@ public class SigninActivity extends AppCompatActivity {
             finish();
         });
 
+        binding.signinForgotPassword.setOnClickListener(view -> {
+            Intent intent = new Intent(SigninActivity.this, FogotPassActivity.class);
+            startActivity(intent);
+        });
+
         binding.signinBtnSignin.setOnClickListener(view -> {
 
             String email = binding.signinInputEmail.getText().toString().trim();
@@ -57,7 +62,6 @@ public class SigninActivity extends AppCompatActivity {
                 return;
             }
 
-            // 1. Email සහ Password එකෙන් ලොග් වෙන්න බලනවා
             firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
