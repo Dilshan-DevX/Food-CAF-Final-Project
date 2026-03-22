@@ -3,11 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-
 
     <application
         android:allowBackup="true"
@@ -19,6 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FoodCAF">
 
+
         <receiver
             android:name=".receiver.AccountSuspendedReceiver"
             android:exported="false">
@@ -26,7 +25,6 @@
                 <action android:name="com.codex.foodcaf.ACCOUNT_SUSPENDED" />
             </intent-filter>
         </receiver>
-
         <receiver
             android:name=".receiver.CartNotificationReceiver"
             android:exported="false">
@@ -39,16 +37,15 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="${MAPS_API_KEY}" />
 
+        <activity android:name=".activity.FogotPassActivity" />
 
         <activity
             android:name=".activity.SignUpActivity"
-            android:exported="false">
-        </activity>
+            android:exported="false"/>
 
         <activity
             android:name=".activity.SigninActivity"
             android:exported="false" />
-
         <activity
             android:name=".activity.OpeningScreen3"
             android:exported="false" />
@@ -71,6 +68,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".activity.MainActivity"
             android:exported="false" />

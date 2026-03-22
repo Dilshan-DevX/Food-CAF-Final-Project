@@ -48,6 +48,8 @@ dependencies {
     implementation libs.activity
     implementation libs.constraintlayout
     implementation libs.play.services.location
+    implementation libs.navigation.fragment
+    implementation libs.navigation.ui
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
@@ -81,5 +83,8 @@ dependencies {
 
     //not
     implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.1.0'
+
+    //Okhttp
+    implementation 'com.squareup.okhttp3:okhttp:4.12.0'
 
 }
