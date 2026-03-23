@@ -395,7 +395,7 @@ public class EditProfileFragment extends Fragment implements OnMapReadyCallback 
 
         firebaseAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
-        storage = FirebaseStorage.getInstance(); // Firebase Storage Initialize
+        storage = FirebaseStorage.getInstance();
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
 
         imgProfile = view.findViewById(R.id.imgProfile);

@@ -518,7 +518,6 @@ public class CheckOutFragment extends Fragment implements OnMapReadyCallback {
     private List<CartItem> buyNowItems = null;
     private boolean isBuyNow = false;
 
-    // Map & Location er jonno variables
     private GoogleMap mMap;
     private static final int LOCATION_REQ_CODE = 100;
     private FusedLocationProviderClient fusedLocationClient;
@@ -551,10 +550,8 @@ public class CheckOutFragment extends Fragment implements OnMapReadyCallback {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // Location Client Initialize kora
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity());
 
-        // Map Initialize kora
         com.google.android.gms.maps.SupportMapFragment mapFragment =
                 (com.google.android.gms.maps.SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
 
@@ -571,10 +568,8 @@ public class CheckOutFragment extends Fragment implements OnMapReadyCallback {
 
         binding.btnBack.setOnClickListener(v -> requireActivity().getSupportFragmentManager().popBackStack());
 
-        // Address editable kora holo by default
         binding.txtAddressDetail.setEnabled(true);
 
-        // Location icon e click korle address auto fill hobe
         binding.btnEditAddress.setOnClickListener(v -> {
             fetchAndSetCurrentLocation(binding.txtAddressDetail);
         });
@@ -654,52 +649,7 @@ public class CheckOutFragment extends Fragment implements OnMapReadyCallback {
                 return;
             }
 
-//            selectedPaymentId = binding.radioGroupPayment.getCheckedRadioButtonId();
-//            if (selectedPaymentId == binding.radioCOD.getId()) {
-//                selectedPaymentMethod = binding.radioCOD.getText().toString();
-//            } else if (selectedPaymentId == binding.radioCard.getId()) {
-//                selectedPaymentMethod = binding.radioCard.getText().toString();
-//            }
-//
-//            uniqueOrderId = "ORD_" + System.currentTimeMillis();
-//
-//            if (selectedPaymentId == binding.radioCard.getId()) {
-//                if (paymentActive) {
-//                    InitRequest req = new InitRequest();
-//                    req.setSandBox(true);
-//                    req.setMerchantId("1225048");
-//                    req.setMerchantSecret("MTMxNzk2OTI5MDIxNDIxNDMwOTEyOTkzMjkyMjc2MjQwNTU3MzAyOQ==");
-//                    req.setCurrency("LKR");
-//                    req.setAmount(totalCost);
-//                    req.setOrderId(uniqueOrderId);
-//                    req.setItemsDescription("Thank you for your order");
-//                    req.getCustomer().setFirstName(newName);
-//                    req.getCustomer().setLastName(".");
-//                    req.getCustomer().setEmail(newEmail);
-//                    req.getCustomer().setPhone(newNumber);
-//                    req.getCustomer().getAddress().setAddress(newAddress);
-//                    req.getCustomer().getAddress().setCity(".");
-//                    req.getCustomer().getAddress().setCountry("Sri Lanka");
-//                    req.setNotifyUrl("https://foodcaf.requestcatcher.com/");
-//
-//                    Intent intent = new Intent(getActivity(), PHMainActivity.class);
-//                    intent.putExtra(PHConstants.INTENT_EXTRA_DATA, req);
-//                    paymentLauncher.launch(intent);
-//                }
-//            } else {
-//                if (isBuyNow && buyNowItems != null) {
-//                    placeOrder(buyNowItems, "Pending", null);
-//                } else {
-//                    db.collection("users").document(uid).collection("cart")
-//                            .get()
-//                            .addOnSuccessListener(qds -> {
-//                                if (!qds.isEmpty()) {
-//                                    List<CartItem> cartItems = qds.toObjects(CartItem.class);
-//                                    placeOrder(cartItems, "Pending", qds);
-//                                }
-//                            });
-//                }
-//            }
+
 
             binding.btnConfirmOrder.setEnabled(false);
             binding.btnConfirmOrder.setText("Processing...");
@@ -716,7 +666,7 @@ public class CheckOutFragment extends Fragment implements OnMapReadyCallback {
             if (selectedPaymentId == binding.radioCard.getId()) {
                 if (paymentActive) {
                     InitRequest req = new InitRequest();
-                    // PayHere Details ටික (කලින් විදියටම)...
+
                     req.setSandBox(true);
                     req.setMerchantId("1225048");
                     req.setMerchantSecret("MTMxNzk2OTI5MDIxNDIxNDMwOTEyOTkzMjkyMjc2MjQwNTU3MzAyOQ==");
@@ -748,7 +698,7 @@ public class CheckOutFragment extends Fragment implements OnMapReadyCallback {
                                     List<CartItem> cartItems = qds.toObjects(CartItem.class);
                                     placeOrder(cartItems, "Pending", qds);
                                 } else {
-                                    // 🔴 Cart එක හිස් නම් ආයෙත් බට්න් එක හදනවා
+
                                     binding.btnConfirmOrder.setEnabled(true);
                                     binding.btnConfirmOrder.setText("Confirm Order");
                                 }
@@ -763,7 +713,7 @@ public class CheckOutFragment extends Fragment implements OnMapReadyCallback {
         });
     }
 
-    // Current Location fetch kora ebong address set korar method
+    // Current Location
     private void fetchAndSetCurrentLocation(android.widget.EditText etLocation) {
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQ_CODE);
@@ -923,7 +873,7 @@ public class CheckOutFragment extends Fragment implements OnMapReadyCallback {
         db.collection("orders").document(order.getOrderId())
                 .set(order)
                 .addOnSuccessListener(aVoid -> {
-                    if (!isAdded()) return; // 🔴 ආරක්ෂිත පියවර
+                    if (!isAdded()) return;
 
                     Toast.makeText(getContext(), "Order placed successfully!", Toast.LENGTH_SHORT).show();
 
@@ -950,7 +900,7 @@ public class CheckOutFragment extends Fragment implements OnMapReadyCallback {
     }
 
     private void navigateToOrderComplete(String orderId) {
-        if (!isAdded()) return; // 🔴 ආරක්ෂිත පියවර
+        if (!isAdded()) return;
 
         OrderCompleteFragment fragment = new OrderCompleteFragment();
         Bundle bundle = new Bundle();
@@ -973,13 +923,13 @@ public class CheckOutFragment extends Fragment implements OnMapReadyCallback {
                             saveOrderAfterCardPayment(response.getData());
                         } else {
                             Log.e("PAYHERE", response.getData().getMessage());
-                            binding.btnConfirmOrder.setEnabled(true); // 🔴
+                            binding.btnConfirmOrder.setEnabled(true);
                             binding.btnConfirmOrder.setText("Confirm Order");
                         }
                     }
                 } else if (result.getResultCode() == Activity.RESULT_CANCELED) {
                     Log.e("PAYHERE", "Payment Canceled");
-                    binding.btnConfirmOrder.setEnabled(true); // 🔴 Cancel කළොත් බට්න් එක යථා තත්ත්වයට පත් කරනවා
+                    binding.btnConfirmOrder.setEnabled(true);
                     binding.btnConfirmOrder.setText("Confirm Order");
                 }
             });

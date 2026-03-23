@@ -41,17 +41,17 @@ public class OrderFragment extends Fragment {
     private static final String TAG            = "OrderImgDebug";
     private static final long   CANCEL_WINDOW  = 10 * 60 * 1000L;
 
-    private RecyclerView    rvOrderHistory;
+    private RecyclerView rvOrderHistory;
     private OrderHistoryAdapter adapter;
-    private List<Order>     orderList = new ArrayList<>();
+    private List<Order> orderList = new ArrayList<>();
 
-    private TextView      tvOrderId, tvOrderDate, tvOrderStatus, tvOrderTotal;
-    private ImageView     iconStatus, imgRestaurant2;
-    private LinearLayout  expandedDetailsLayout;
-    private View          btnRepeatOrder;
+    private TextView tvOrderId, tvOrderDate, tvOrderStatus, tvOrderTotal;
+    private ImageView iconStatus, imgRestaurant2;
+    private LinearLayout expandedDetailsLayout;
+    private View btnRepeatOrder;
 
-    private Order         selectedOrder;
-    private String        selectedDocumentId;
+    private Order selectedOrder;
+    private String selectedDocumentId;
 
     public OrderFragment() {}
 
@@ -65,20 +65,20 @@ public class OrderFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        rvOrderHistory        = view.findViewById(R.id.rvOrderHistory);
-        tvOrderId             = view.findViewById(R.id.orderId);
-        tvOrderDate           = view.findViewById(R.id.ItemOrderDate);
-        tvOrderStatus         = view.findViewById(R.id.OrderStatus);
-        tvOrderTotal          = view.findViewById(R.id.OrderTotalPrice);
-        iconStatus            = view.findViewById(R.id.iconStatus);
-        imgRestaurant2        = view.findViewById(R.id.imgRestaurant2);
+        rvOrderHistory = view.findViewById(R.id.rvOrderHistory);
+        tvOrderId = view.findViewById(R.id.orderId);
+        tvOrderDate = view.findViewById(R.id.ItemOrderDate);
+        tvOrderStatus = view.findViewById(R.id.OrderStatus);
+        tvOrderTotal = view.findViewById(R.id.OrderTotalPrice);
+        iconStatus = view.findViewById(R.id.iconStatus);
+        imgRestaurant2  = view.findViewById(R.id.imgRestaurant2);
         expandedDetailsLayout = view.findViewById(R.id.expandedDetailsLayout);
-        btnRepeatOrder        = view.findViewById(R.id.btnRepeatOrder);
+        btnRepeatOrder = view.findViewById(R.id.btnRepeatOrder);
 
         imgRestaurant2.setImageResource(R.drawable.order);
         rvOrderHistory.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        // Back → Home
+
         requireActivity().getOnBackPressedDispatcher().addCallback(
                 getViewLifecycleOwner(),
                 new OnBackPressedCallback(true) {
@@ -302,12 +302,12 @@ public class OrderFragment extends Fragment {
 
     private void addCancelButtonIfEligible(Order order) {
         boolean isPending = "Pending".equalsIgnoreCase(order.getStatus());
-        if (!isPending) return; // Pending nathi unoth cancel button nanna
+        if (!isPending) return;
 
         boolean withinWindow = isWithin10Minutes(order.getOrderDate());
-        if (!withinWindow) return; // 10 min giya unoth cancel button nanna
+        if (!withinWindow) return;
 
-        // ✅ Cancel button dynamically add karanawa
+
         MaterialButton btnCancel = new MaterialButton(requireContext());
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, dpToPx(52));

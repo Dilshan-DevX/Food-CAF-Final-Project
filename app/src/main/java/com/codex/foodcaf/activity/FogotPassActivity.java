@@ -106,9 +106,9 @@ public class FogotPassActivity extends AppCompatActivity {
             return;
         }
 
-        Log.d(TAG, "▶ Sending reset to: " + email);
-        Log.d(TAG, "▶ URL: " + RESET_URL);
-        Log.d(TAG, "▶ Body: " + jsonBody.toString());
+        Log.d(TAG, "Sending reset to: " + email);
+        Log.d(TAG, "URL: " + RESET_URL);
+        Log.d(TAG, "Body: " + jsonBody.toString());
 
         RequestBody body = RequestBody.create(
                 jsonBody.toString(),
@@ -123,7 +123,7 @@ public class FogotPassActivity extends AppCompatActivity {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Log.e(TAG, "✖ Network failure: " + e.getMessage(), e);
+                Log.e(TAG, "Network failure: " + e.getMessage(), e);
                 runOnUiThread(() -> {
                     setBusy(false);
                     showMessage("Network error: " + e.getMessage(), false);
@@ -135,22 +135,22 @@ public class FogotPassActivity extends AppCompatActivity {
                 String responseBody = response.body() != null
                         ? response.body().string() : "";
 
-                Log.d(TAG, "◀ HTTP code: " + response.code());
-                Log.d(TAG, "◀ Response body: " + responseBody);
+                Log.d(TAG, "HTTP code: " + response.code());
+                Log.d(TAG, "Response body: " + responseBody);
 
                 runOnUiThread(() -> {
                     setBusy(false);
 
                     if (response.isSuccessful()) {
-                        Log.d(TAG, "✔ Email sent successfully!");
+                        Log.d(TAG, "Email sent successfully!");
                         showMessage(
-                                "✓ Password reset email sent to " + email
+                                "Password reset email sent to " + email
                                         + "\n\nCheck your inbox and follow the link.",
                                 true);
                         btnSendReset.setEnabled(false);
                         btnSendReset.setText("Email Sent ✓");
                     } else {
-                        Log.e(TAG, "✖ Firebase error response: " + responseBody);
+                        Log.e(TAG, "Firebase error response: " + responseBody);
                         String errorMsg = parseFirebaseError(responseBody);
                         showMessage(errorMsg, false);
                     }
@@ -164,7 +164,7 @@ public class FogotPassActivity extends AppCompatActivity {
         try {
             JSONObject json = new JSONObject(responseBody);
             String code = json.getJSONObject("error").getString("message");
-            Log.e(TAG, "✖ Firebase error code: " + code);
+            Log.e(TAG, "Firebase error code: " + code);
 
             switch (code) {
                 case "EMAIL_NOT_FOUND":

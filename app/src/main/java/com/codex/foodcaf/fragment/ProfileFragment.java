@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.codex.foodcaf.R;
+import com.codex.foodcaf.activity.MainActivity;
 import com.codex.foodcaf.model.User;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -138,10 +139,12 @@ public class ProfileFragment extends Fragment {
                     firebaseAuth.signOut();
                 }
 
-                com.google.android.material.bottomnavigation.BottomNavigationView bottomNavView = requireActivity().findViewById(R.id.bottomNavView);
-                if (bottomNavView != null) {
-                    bottomNavView.setSelectedItemId(R.id.bottom_nav_home);
-                }
+                Toast.makeText(getContext(), "Signed out successfully", Toast.LENGTH_SHORT).show();
+
+                android.content.Intent intent = new android.content.Intent(requireActivity(), MainActivity.class);
+                intent.setFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK | android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                requireActivity().finish();
             });
         }
 

@@ -1,66 +1,152 @@
 package com.codex.foodcaf.fragment;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.codex.foodcaf.R;
+import com.codex.foodcaf.adapter.MessageAdapter;
+import com.codex.foodcaf.model.Message;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link MessageFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+import java.util.List;
+
 public class MessageFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    public static boolean isChatOpen = false;
+    private RecyclerView rvMessages;
+    private EditText etMessageInput;
+    private FloatingActionButton btnSend;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private FirebaseFirestore db;
+    private FirebaseAuth auth;
+    private String currentUserId;
+    private final String ADMIN_ID = "UO6OFTZdtaRAiWUJLD5TiJIuONj2";
 
-    public MessageFragment() {
-        // Required empty public constructor
-    }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment MessageFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static MessageFragment newInstance(String param1, String param2) {
-        MessageFragment fragment = new MessageFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    public MessageFragment() {}
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_message, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        rvMessages = view.findViewById(R.id.rvMessages);
+        etMessageInput = view.findViewById(R.id.etMessageInput);
+        btnSend = view.findViewById(R.id.btnSend);
+
+        db = FirebaseFirestore.getInstance();
+        auth = FirebaseAuth.getInstance();
+
+        if (auth.getCurrentUser() != null) {
+            currentUserId = auth.getCurrentUser().getUid();
+            setupRecyclerView();
+            loadMessages();
+        } else {
+            Toast.makeText(getContext(), "Please login to chat", Toast.LENGTH_SHORT).show();
+        }
+
+        btnSend.setOnClickListener(v -> {
+            String msgText = etMessageInput.getText().toString().trim();
+            if (!msgText.isEmpty()) {
+                sendMessage(msgText);
+            }
+        });
+
+
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new androidx.activity.OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                com.google.android.material.bottomnavigation.BottomNavigationView bottomNav = requireActivity().findViewById(R.id.bottomNavView);
+
+                if (bottomNav != null) {
+                    bottomNav.setSelectedItemId(R.id.bottom_nav_home);
+                } else {
+                    requireActivity().getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.fragmentContainer, new HomeFragment())
+                            .commit();
+                }
+            }
+        });
+
+    }
+
+    private void setupRecyclerView() {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        layoutManager.setStackFromEnd(true);
+        rvMessages.setLayoutManager(layoutManager);
+    }
+
+    private void sendMessage(String msgText) {
+        long timestamp = System.currentTimeMillis();
+
+        Message message = new Message();
+        message.setSenderId(currentUserId);
+        message.setReceiverId(ADMIN_ID);
+        message.setMessageText(msgText);
+        message.setTimestamp(timestamp);
+
+        db.collection("chats").document(currentUserId).collection("messages")
+                .add(message)
+                .addOnSuccessListener(documentReference -> {
+                    etMessageInput.setText("");
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(getContext(), "Failed to send", Toast.LENGTH_SHORT).show();
+                });
+    }
+
+    private void loadMessages() {
+        db.collection("chats").document(currentUserId).collection("messages")
+                .orderBy("timestamp", Query.Direction.ASCENDING)
+                .addSnapshotListener((value, error) -> {
+                    if (error != null) {
+                        return;
+                    }
+                    if (value != null) {
+                        List<Message> messageList = new ArrayList<>();
+                        for (com.google.firebase.firestore.DocumentSnapshot doc : value.getDocuments()) {
+                            Message msg = doc.toObject(Message.class);
+                            messageList.add(msg);
+                        }
+
+                        MessageAdapter adapter = new MessageAdapter(messageList, currentUserId);
+                        rvMessages.setAdapter(adapter);
+
+                        if (!messageList.isEmpty()) {
+                            rvMessages.scrollToPosition(messageList.size() - 1);
+                        }
+
+                    }
+                });
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        isChatOpen = true;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        isChatOpen = false;
     }
 }

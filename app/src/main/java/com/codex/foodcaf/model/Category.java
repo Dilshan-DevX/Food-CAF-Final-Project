@@ -15,5 +15,4 @@ public class Category {
     private  String categoryName;
     private  String categoryImage;
     private  String categorySubtitle;
-//    private  String catecoryColor;
 }

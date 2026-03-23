@@ -31,19 +31,6 @@ public class Product {
     @Builder
     @AllArgsConstructor
     @NoArgsConstructor
-
-//    public static class Attribute {
-//
-//        @com.google.firebase.firestore.PropertyName("porsion")
-//        private String name;
-//        private String type;
-//        private List<String> values;
-//
-//        @com.google.firebase.firestore.PropertyName("Price")
-//        private List<String> prices;
-//    }
-
-
     public static class Attribute {
         private String porsion;
         private String type;

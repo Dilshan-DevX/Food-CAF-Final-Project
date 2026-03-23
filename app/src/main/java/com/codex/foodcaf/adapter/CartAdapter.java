@@ -82,7 +82,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         holder.btnCartMinus.setOnClickListener(v -> {
             int pos = holder.getAdapterPosition();
             if(pos != RecyclerView.NO_POSITION) {
-                // හරියටම ක්ලික් කරපු අයිටම් එක ගන්නවා
+
                 CartItem currentItem = cartItems.get(pos);
                 int currentQty = currentItem.getQty();
 
@@ -178,8 +178,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     }
 
     public interface CartItemInteractionListener {
-        void onQuantityUpdated(CartItem cartItem); // Qty එක වෙනස් වුණාම
-        void onItemRemoved(CartItem cartItem);     // Item එක Delete කළාම
-        void onItemClick(Product product);         // Item එක Click කළාම
+        void onQuantityUpdated(CartItem cartItem); // Qty
+        void onItemRemoved(CartItem cartItem);     // Item
+        void onItemClick(Product product);         // Item
     }
 }
