@@ -525,9 +525,6 @@ public class SingleProductFragment extends Fragment {
                                 });
                             }
 
-                            // =============================================
-                            // Add to Cart Button Logic
-                            // =============================================
                             binding.btnAddToCart.setOnClickListener(v -> {
                                 if (product.isAvailability()) {
 
@@ -575,25 +572,19 @@ public class SingleProductFragment extends Fragment {
                                 }
                             });
 
-                            // =============================================
-                            // Buy Now Button Logic — Cart bypass කරලා
-                            // directly CheckOutFragment එකට යනවා
-                            // =============================================
                             binding.btnBuyNow.setOnClickListener(v -> {
                                 if (!product.isAvailability()) return;
 
                                 FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
                                 if (firebaseAuth.getCurrentUser() == null) {
-                                    // Login නෑ නම් Sign In page එකට යනවා
+
                                     Intent intent = new Intent(getActivity(), SigninActivity.class);
                                     startActivity(intent);
                                     return;
                                 }
 
-                                // Selected attributes list හදනවා
                                 List<CartItem.Attribute> finalAttributes = new ArrayList<>(selectedAttributesMap.values());
 
-                                // BuyNow CartItem එක හදනවා
                                 CartItem buyNowItem = new CartItem();
                                 buyNowItem.setProductId(productId);
                                 buyNowItem.setProductName(product.getFoodTitle());
@@ -602,8 +593,6 @@ public class SingleProductFragment extends Fragment {
                                 buyNowItem.setQty(quantity);
                                 buyNowItem.setAttributes(finalAttributes);
 
-                                // Item list එකක් හදලා CheckOutFragment
-                                // එකට Bundle එකෙන් pass කරනවා
                                 ArrayList<CartItem> buyNowList = new ArrayList<>();
                                 buyNowList.add(buyNowItem);
 
@@ -635,11 +624,9 @@ public class SingleProductFragment extends Fragment {
             String uid = firebaseAuth.getCurrentUser().getUid();
             FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-            // FavModel එකක් හදාගෙන Data එක සෙට් කරනවා
             Map<String, Object> favData = new HashMap<>();
             favData.put("productId", productId);
 
-            // Document ID එක විදියට Product ID එකම දානවා (එතකොට Duplicate වෙන්නේ නෑ)
             db.collection("users").document(uid).collection("fav")
                     .document(productId)
                     .set(favData)

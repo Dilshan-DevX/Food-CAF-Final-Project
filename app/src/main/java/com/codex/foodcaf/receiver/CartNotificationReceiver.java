@@ -19,12 +19,10 @@ public class CartNotificationReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        // අර යවපු සිග්නල් එකමද කියලා බලනවා
         if ("com.codex.foodcaf.CART_UPDATED".equals(intent.getAction())) {
 
             NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
-            // Android O (8.0) සහ ඊට ඉහළ නම් Channel එකක් අනිවාර්යයි
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 NotificationChannel channel = new NotificationChannel(
                         CHANNEL_ID,
@@ -34,21 +32,19 @@ public class CartNotificationReceiver extends BroadcastReceiver {
                 notificationManager.createNotificationChannel(channel);
             }
 
-            // Notification එක එබුවම ආයෙත් MainActivity එක ඕපන් වෙන්න
             Intent tapIntent = new Intent(context, MainActivity.class);
             tapIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, tapIntent, PendingIntent.FLAG_IMMUTABLE);
 
             // Notification එකේ Design එක
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
-                    .setSmallIcon(R.drawable.shopping_cart_24px) // 🛒 Cart එකේ අයිකන් එක
+                    .setSmallIcon(R.drawable.shopping_cart_24px)
                     .setContentTitle("Added to Cart! 🛒")
                     .setContentText("The product has been added to your cart. You can buy it now!")
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                     .setContentIntent(pendingIntent)
-                    .setAutoCancel(true); // එබුවම අයින් වෙලා යන්න
+                    .setAutoCancel(true);
 
-            // Notification එක පෙන්වනවා
             notificationManager.notify((int) System.currentTimeMillis(), builder.build());
         }
     }

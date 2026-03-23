@@ -58,7 +58,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -137,8 +136,45 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
 
+        /// /////////Search
 
-        //set header details
+        android.widget.AutoCompleteTextView searchInput = findViewById(R.id.textInputSearch);
+
+
+        firebaseFirestore.collection("products").get().addOnSuccessListener(queryDocumentSnapshots -> {
+            java.util.List<String> productNames = new java.util.ArrayList<>();
+            for (com.google.firebase.firestore.DocumentSnapshot doc : queryDocumentSnapshots) {
+                String name = doc.getString("foodTitle");
+                if (name != null) {
+                    productNames.add(name);
+                }
+            }
+            android.widget.ArrayAdapter<String> searchAdapter = new android.widget.ArrayAdapter<>(
+                    this, android.R.layout.simple_dropdown_item_1line, productNames);
+            searchInput.setAdapter(searchAdapter);
+        });
+
+        searchInput.setOnItemClickListener((parent, view, position, id) -> {
+            String selectedProduct = (String) parent.getItemAtPosition(position);
+
+            android.view.inputmethod.InputMethodManager imm = (android.view.inputmethod.InputMethodManager) getSystemService(android.content.Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(searchInput.getWindowToken(), 0);
+
+            searchInput.setText("");
+
+            Bundle bundle = new Bundle();
+            bundle.putString("SEARCH_QUERY", selectedProduct);
+            HomeFragment homeFragment = new HomeFragment();
+            homeFragment.setArguments(bundle);
+
+            loadFragment(homeFragment);
+
+            navigationView.setCheckedItem(R.id.side_nav_home);
+            bottomNavigationView.getMenu().findItem(R.id.bottom_nav_home).setChecked(true);
+        });
+
+
+        /////////////////set header details
 
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
 
@@ -215,6 +251,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
 
+        listenForNewMessages();
     }
 
 
@@ -308,13 +345,69 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
+    private long appStartTime = System.currentTimeMillis();
+
+    private void listenForNewMessages() {
+        if (firebaseAuth.getCurrentUser() == null) return;
+
+        String uid = firebaseAuth.getCurrentUser().getUid();
+
+        firebaseFirestore.collection("chats").document(uid).collection("messages")
+                .orderBy("timestamp", com.google.firebase.firestore.Query.Direction.ASCENDING)
+                .addSnapshotListener((value, error) -> {
+                    if (error != null || value == null) return;
+
+                    for (com.google.firebase.firestore.DocumentChange dc : value.getDocumentChanges()) {
+
+                        if (dc.getType() == com.google.firebase.firestore.DocumentChange.Type.ADDED) {
+                            com.codex.foodcaf.model.Message msg = dc.getDocument().toObject(com.codex.foodcaf.model.Message.class);
+
+                            if (msg.getSenderId().equals("UO6OFTZdtaRAiWUJLD5TiJIuONj2") &&
+                                    msg.getTimestamp() > appStartTime &&
+                                    !MessageFragment.isChatOpen) {
+
+                                showNotification("Message from Admin", msg.getMessageText());
+                            }
+                        }
+                    }
+                });
+    }
+
+    private void showNotification(String title, String body) {
+        android.app.NotificationManager notificationManager = (android.app.NotificationManager) getSystemService(android.content.Context.NOTIFICATION_SERVICE);
+        String channelId = "chat_notifications";
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            android.app.NotificationChannel channel = new android.app.NotificationChannel(
+                    channelId,
+                    "Chat Messages",
+                    android.app.NotificationManager.IMPORTANCE_HIGH);
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        android.app.PendingIntent pendingIntent = android.app.PendingIntent.getActivity(
+                this, 0, intent, android.app.PendingIntent.FLAG_IMMUTABLE | android.app.PendingIntent.FLAG_UPDATE_CURRENT);
+
+        androidx.core.app.NotificationCompat.Builder builder = new androidx.core.app.NotificationCompat.Builder(this, channelId)
+                .setSmallIcon(R.drawable.applogo)
+                .setContentTitle(title)
+                .setContentText(body)
+                .setAutoCancel(true)
+                .setPriority(androidx.core.app.NotificationCompat.PRIORITY_HIGH)
+                .setDefaults(androidx.core.app.NotificationCompat.DEFAULT_ALL)
+                .setContentIntent(pendingIntent);
+
+        notificationManager.notify((int) System.currentTimeMillis(), builder.build());
+    }
+
     private void loadFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.fragmentContainer,fragment);
         transaction.commit();
 
-        /// single line execution
-//        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer,fragment).commit();
+
     }
 }

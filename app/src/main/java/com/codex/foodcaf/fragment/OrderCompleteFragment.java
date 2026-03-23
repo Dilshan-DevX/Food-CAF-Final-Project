@@ -152,7 +152,7 @@ public class OrderCompleteFragment extends Fragment {
                         if (!querySnapshot.isEmpty()) {
                             String timeStr = querySnapshot.getDocuments().get(0).getString("foodTime");
                             int time = extractTime(timeStr);
-                            startCountdown(time); // අදාළ කෑමේ වෙලාවෙන් Timer එක දුවනවා
+                            startCountdown(time);
                         } else {
                             startCountdown(25);
                         }

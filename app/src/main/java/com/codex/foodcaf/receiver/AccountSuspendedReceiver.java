@@ -27,18 +27,17 @@ public class AccountSuspendedReceiver extends BroadcastReceiver {
                 NotificationChannel channel = new NotificationChannel(
                         CHANNEL_ID,
                         "Account Alerts",
-                        NotificationManager.IMPORTANCE_HIGH // වැදගත් පණිවිඩයක් නිසා HIGH දැම්මා
+                        NotificationManager.IMPORTANCE_HIGH
                 );
                 notificationManager.createNotificationChannel(channel);
             }
 
-            // Notification එක එබුවම ආයෙත් Signin පේජ් එකට යන්න
             Intent tapIntent = new Intent(context, SigninActivity.class);
             tapIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, tapIntent, PendingIntent.FLAG_IMMUTABLE);
 
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
-                    .setSmallIcon(android.R.drawable.ic_dialog_alert) // අනතුරු ඇඟවීමේ අයිකන් එක
+                    .setSmallIcon(android.R.drawable.ic_dialog_alert)
                     .setContentTitle("Account Suspended")
                     .setContentText("Your account is Suspended. Please contact admin.")
                     .setPriority(NotificationCompat.PRIORITY_HIGH)
