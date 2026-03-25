@@ -138,6 +138,9 @@ public class SignUpActivity extends AppCompatActivity {
                                 Toast.makeText(SignUpActivity.this, "User Registration Failed", Toast.LENGTH_SHORT).show();
                             }
                         });
+                    }else {
+                        String errorMessage = task.getException() != null ? task.getException().getMessage() : "The email address is already in use by another account/Verification Failed";
+                        Toast.makeText(SignUpActivity.this, errorMessage, Toast.LENGTH_LONG).show();
                     }
                 }
             });

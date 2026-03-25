@@ -147,7 +147,32 @@ public class ProfileFragment extends Fragment {
                 requireActivity().finish();
             });
         }
+        android.widget.LinearLayout btnOrderHistory = view.findViewById(R.id.btnOrderHistory);
+        if (btnOrderHistory != null) {
+            btnOrderHistory.setOnClickListener(v -> {
+                requireActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragmentContainer, new OrderFragment())
+                        .addToBackStack(null)
+                        .commit();
 
+                // Bottom navigation eke Order icon eka select wenna hadanna (optional)
+                com.google.android.material.bottomnavigation.BottomNavigationView bottomNavigationView = requireActivity().findViewById(R.id.bottomNavView);
+                if (bottomNavigationView != null) {
+                    bottomNavigationView.setSelectedItemId(R.id.bottom_order);
+                }
+            });
+        }
+
+        // My Favorite
+        android.widget.LinearLayout btnMyFavorite = view.findViewById(R.id.btnMyFavorite);
+        if (btnMyFavorite != null) {
+            btnMyFavorite.setOnClickListener(v -> {
+                requireActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragmentContainer, new FavouritesFragment())
+                        .addToBackStack(null)
+                        .commit();
+            });
+        }
 
     }
 
