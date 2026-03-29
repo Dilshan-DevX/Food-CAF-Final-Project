@@ -54,6 +54,15 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        if (binding != null) {
+            binding.rvCategories.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+            binding.rvCategories.setAdapter(new HomeCategoryAdapter(new java.util.ArrayList<>(), getContext()));
+
+            binding.rvProducts.setLayoutManager(new GridLayoutManager(getContext(), 2));
+            binding.rvProducts.setAdapter(new HomeProductAdapter(new java.util.ArrayList<>(), product -> {}));
+        }
+
         loadCategories();
         loadProducts();
         loadBannerFromFirebase();
@@ -182,6 +191,20 @@ public class HomeFragment extends Fragment {
                 });
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (getActivity() != null) {
+            View bottomNav = getActivity().findViewById(R.id.bottomNavView);
+            if (bottomNav != null) {
+                bottomNav.setVisibility(View.VISIBLE);
+            }
+        }
+
+        loadCategories();
+        loadProducts();
+        loadBannerFromFirebase();
+    }
     @Override
     public void onDestroyView() {
         super.onDestroyView();
