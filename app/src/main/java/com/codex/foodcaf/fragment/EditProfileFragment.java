@@ -344,12 +344,11 @@ public class EditProfileFragment extends Fragment implements OnMapReadyCallback 
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore db;
     private FirebaseStorage storage;
-
     private GoogleMap mMap;
     private static final int LOCATION_REQ_CODE = 100;
     private FusedLocationProviderClient fusedLocationClient;
 
-    // පින්තූරය තෝරගන්න Launcher එක සහ SharedPreferences
+    //SharedPreferences
     private ActivityResultLauncher<Intent> galleryLauncher;
     private SharedPreferences sharedPreferences;
     private ShapeableImageView imgProfile;

@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private FirebaseFirestore firebaseFirestore;
     private FirebaseAuth firebaseAuth;
+    private com.google.firebase.firestore.ListenerRegistration messageListener;
 
 
     @Override
@@ -354,7 +355,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         String uid = firebaseAuth.getCurrentUser().getUid();
 
-        firebaseFirestore.collection("chats").document(uid).collection("messages")
+        if (messageListener != null) {
+            messageListener.remove();
+        }
+
+        messageListener = firebaseFirestore.collection("chats").document(uid).collection("messages")
                 .orderBy("timestamp", com.google.firebase.firestore.Query.Direction.ASCENDING)
                 .addSnapshotListener((value, error) -> {
                     if (error != null || value == null) return;
@@ -368,14 +373,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                     msg.getTimestamp() > appStartTime &&
                                     !MessageFragment.isChatOpen) {
 
-                                showNotification("Message from Admin", msg.getMessageText());
+                                showNotification("Message from Admin", msg.getMessageText(), (int) msg.getTimestamp());
                             }
                         }
                     }
                 });
     }
 
-    private void showNotification(String title, String body) {
+    private void showNotification(String title, String body, int notificationId) {
         android.app.NotificationManager notificationManager = (android.app.NotificationManager) getSystemService(android.content.Context.NOTIFICATION_SERVICE);
         String channelId = "chat_notifications";
 
@@ -401,7 +406,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 .setDefaults(androidx.core.app.NotificationCompat.DEFAULT_ALL)
                 .setContentIntent(pendingIntent);
 
-        notificationManager.notify((int) System.currentTimeMillis(), builder.build());
+        notificationManager.notify(notificationId, builder.build());
     }
 
     private void loadFragment(Fragment fragment) {
@@ -411,5 +416,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         transaction.commit();
 
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (messageListener != null) {
+            messageListener.remove();
+        }
     }
 }

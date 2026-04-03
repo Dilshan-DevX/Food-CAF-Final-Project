@@ -453,7 +453,6 @@ public class CheckOutFragment extends Fragment implements OnMapReadyCallback {
                     if (!isAdded()) return;
                     Toast.makeText(getContext(), "Order failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
 
-                    // 🔴 Fail වුණොත් ආයෙත් බට්න් එක ඔබන්න දෙනවා
                     binding.btnConfirmOrder.setEnabled(true);
                     binding.btnConfirmOrder.setText("Confirm Order");
                 });
