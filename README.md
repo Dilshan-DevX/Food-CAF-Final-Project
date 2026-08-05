@@ -49,51 +49,6 @@
 
 ---
 
-## 📱 Screenshots
-
-<table>
-  <tr>
-    <td align="center"><strong>Splash Screen</strong></td>
-    <td align="center"><strong>Onboarding</strong></td>
-    <td align="center"><strong>Sign Up</strong></td>
-    <td align="center"><strong>Sign In</strong></td>
-  </tr>
-  <tr>
-    <td><img src="docs/screenshots/splash.png" width="180"/></td>
-    <td><img src="docs/screenshots/onboarding.png" width="180"/></td>
-    <td><img src="docs/screenshots/signup.png" width="180"/></td>
-    <td><img src="docs/screenshots/signin.png" width="180"/></td>
-  </tr>
-  <tr>
-    <td align="center"><strong>Home</strong></td>
-    <td align="center"><strong>Categories</strong></td>
-    <td align="center"><strong>Product Detail</strong></td>
-    <td align="center"><strong>Cart</strong></td>
-  </tr>
-  <tr>
-    <td><img src="docs/screenshots/home.png" width="180"/></td>
-    <td><img src="docs/screenshots/categories.png" width="180"/></td>
-    <td><img src="docs/screenshots/product_detail.png" width="180"/></td>
-    <td><img src="docs/screenshots/cart.png" width="180"/></td>
-  </tr>
-  <tr>
-    <td align="center"><strong>Checkout</strong></td>
-    <td align="center"><strong>Orders</strong></td>
-    <td align="center"><strong>Profile</strong></td>
-    <td align="center"><strong>Chat</strong></td>
-  </tr>
-  <tr>
-    <td><img src="docs/screenshots/checkout.png" width="180"/></td>
-    <td><img src="docs/screenshots/orders.png" width="180"/></td>
-    <td><img src="docs/screenshots/profile.png" width="180"/></td>
-    <td><img src="docs/screenshots/chat.png" width="180"/></td>
-  </tr>
-</table>
-
-> 💡 *Add your screenshots to `docs/screenshots/` to make them visible above.*
-
----
-
 ## ✨ Features
 
 ### 🔐 Authentication & Security
